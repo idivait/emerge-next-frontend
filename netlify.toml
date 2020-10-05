@@ -13,5 +13,5 @@
 [[redirects]]
   from = "/rss"
   to = "/rss.xml"
-  status = 301
-  force = false
+  status = 200
+  force = true

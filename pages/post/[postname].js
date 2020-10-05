@@ -3,10 +3,10 @@ import Layout from '@components/Layout'
 import Post from '@components/Post'
 import { getPostBySlug, getAllPosts } from 'lib/adminapi'
 
-export default function BlogPost({ siteTitle, content }) {
+export default function BlogPost({ siteTitle, url, content }) {
   return (
     <>
-      <Layout pageTitle={`${siteTitle} | ${content.title}`}>
+      <Layout url={url} pageTitle={`${siteTitle} | ${content.title}`}>
         <div className="back">
           ←{' '}
           <Link href="/">
@@ -27,6 +27,7 @@ export async function getStaticProps({ ...ctx }) {
 
   return {
     props: {
+      url: config.url,
       siteTitle: config.title,
       content: content || null
     },

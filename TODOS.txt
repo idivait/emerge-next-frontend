@@ -1,0 +1,4 @@
+Missing features:
+TODO Generate Sitemap
+TODO React svg
+TODO Algolia integration function

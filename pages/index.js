@@ -1,24 +1,26 @@
-import Layout from '@components/Layout'
-import PostList from '@components/PostList'
+import fs from 'fs'
 
-import getPosts from '@utils/getPosts'
-import { getAllPosts } from 'lib/adminapi'
+import Layout from "@components/Layout";
+import PostList from "@components/PostList";
 
-const Index = ({ posts, title, description, ...props }) => {
+import { getAllPosts } from "@lib/adminapi";
+import { generateRss } from "@lib/rss";
+
+const Index = ({ posts, title, description, url, ...props }) => {
   return (
     <>
-      <Layout pageTitle={title} description={description}>
+      <Layout url={url} pageTitle={title} description={description}>
         <h1 className="title">Welcome to this demo blog!</h1>
 
         <p className="description">
-          This is a simple blog built with Next, easily deployable on{' '}
+          This is a simple blog built with Next, easily deployable on{" "}
           <a href="https://url.netlify.com/r1j6ybSYU">Netlify</a>.
         </p>
         <main>
           <PostList posts={posts} />
         </main>
         <p>
-          You can look at the repository for this project{' '}
+          You can look at the repository for this project{" "}
           <a href="https://github.com/cassidoo/next-netlify-blog-starter">
             here
           </a>
@@ -33,21 +35,39 @@ const Index = ({ posts, title, description, ...props }) => {
         }
       `}</style>
     </>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;
 
 export async function getStaticProps() {
-  const configData = await import(`../siteconfig.json`)
+  const configData = await import(`../siteconfig.json`);
 
-  const posts = await getAllPosts()
+  const posts = await getAllPosts();
+
+  const rss = generateRss(
+    posts.map(({ slug, title, custom_excerpt, excerpt, published_at }) => ({
+      slug,
+      title,
+      description: custom_excerpt || excerpt,
+      date: published_at,
+    })),
+    {
+      title: configData.title,
+      subpath: "post",
+      url: configData.url,
+      description: configData.description,
+    }
+  );
+
+  fs.writeFileSync('./public/rss.xml', rss);
 
   return {
     props: {
       posts,
-      title: configData.default.title,
-      description: configData.default.description,
+      url: configData.url,
+      title: configData.title,
+      description: configData.description,
     },
-  }
+  };
 }

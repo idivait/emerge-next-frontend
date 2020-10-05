@@ -34,8 +34,6 @@ export default function BlogPost({ siteTitle, content, error }) {
 }
 
 export async function getServerSideProps({ ...ctx }) {
-  // TODO: Handle non-existent post
-  // TODO: Handle not preview mode
   const { preview, res } = ctx;
   console.log("isPreview", preview);
   const { postname } = ctx.params;

@@ -1,9 +1,9 @@
 import Layout from '@components/Layout'
 
-const About = ({ title, description, ...props }) => {
+const About = ({ title, description, url, ...props }) => {
   return (
     <>
-      <Layout pageTitle={`${title} | About`} description={description}>
+      <Layout pageTitle={`${title} | About`} url={url} description={description}>
         <h1 className="title">Welcome to this demo blog!</h1>
 
         <p className="description">
@@ -39,8 +39,9 @@ export async function getStaticProps() {
 
   return {
     props: {
-      title: configData.default.title,
-      description: configData.default.description,
+      url: configData.url,
+      title: configData.title,
+      description: configData.description,
     },
   }
 }

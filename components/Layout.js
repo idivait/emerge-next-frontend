@@ -2,13 +2,19 @@ import Head from 'next/head'
 
 import Header from './Header'
 
-export default function Layout({ children, pageTitle, description, ...props }) {
+export default function Layout({ children, pageTitle, description, url, ...props }) {
   return (
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="utf-8" />
         <meta name="Description" content={description}></meta>
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="RSS feed for current issue"
+          href={url + '/rss.xml'}
+        />
         <title>{pageTitle}</title>
       </Head>
       <style jsx global>{`

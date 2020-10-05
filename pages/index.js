@@ -2,6 +2,7 @@ import Layout from '@components/Layout'
 import PostList from '@components/PostList'
 
 import getPosts from '@utils/getPosts'
+import { getAllPosts } from 'lib/adminapi'
 
 const Index = ({ posts, title, description, ...props }) => {
   return (
@@ -40,9 +41,7 @@ export default Index
 export async function getStaticProps() {
   const configData = await import(`../siteconfig.json`)
 
-  const posts = ((context) => {
-    return getPosts(context)
-  })(require.context('../posts', true, /\.md$/))
+  const posts = await getAllPosts()
 
   return {
     props: {

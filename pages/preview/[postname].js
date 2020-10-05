@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import Layout from '@components/Layout'
 import Post from '@components/Post'
-import { getPostBySlug, getAllPosts } from 'lib/adminapi'
+import { getPreviewPostBySlug } from 'lib/adminapi'
 
 export default function BlogPost({ siteTitle, content }) {
+    if(!content) return <></>
   return (
     <>
       <Layout pageTitle={`${siteTitle} | ${content.title}`}>
@@ -20,9 +21,9 @@ export default function BlogPost({ siteTitle, content }) {
   )
 }
 
-export async function getStaticProps({ ...ctx }) {
+export async function getServerSideProps({ ...ctx }) {
   const { postname } = ctx.params
-  const content = await getPostBySlug(postname)
+  const content = await getPreviewPostBySlug(postname)
   const config = await import(`../../siteconfig.json`)
 
   return {
@@ -30,16 +31,5 @@ export async function getStaticProps({ ...ctx }) {
       siteTitle: config.title,
       content: content || null
     },
-  }
-}
-
-export async function getStaticPaths() {
-  const blogSlugs = await getAllPosts()
-
-  const paths = blogSlugs.map((post) => `/post/${post.slug}`)
-
-  return {
-    paths, // An array of path names, and any params
-    fallback: false, // so that 404s properly appear if something's not matching
   }
 }

@@ -11,9 +11,9 @@ export default function PostList({ posts }) {
           posts.map((post) => {
             return (
               <li key={post.slug}>
-                {post.frontmatter.date}: {` `}
+                {post?.published_at}: {` `}
                 <Link href={{ pathname: `/post/${post.slug}` }}>
-                  <a>{post?.frontmatter?.title}</a>
+                  <a>{post?.title}</a>
                 </Link>
               </li>
             )

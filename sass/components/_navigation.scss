@@ -1,0 +1,7 @@
+#site-menu {
+    @media screen and (max-width: 768px){
+        .menu-item-search input[type="submit"] {
+            top: 10px;
+        }
+    }
+}

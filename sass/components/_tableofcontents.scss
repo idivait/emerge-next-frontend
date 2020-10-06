@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css?family=Abril+Fatface");
+.tableofcontents {
+    list-style: none;
+    counter-reset: my-awesome-counter;
+    $lmargin: 2em;
+    display: grid;
+    grid-template-rows: repeat(20, 0.7fr);
+    grid-gap: 0em;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(100px, 1fr);
+    margin: 0 0 4rem;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+    font-size: 0.9rem;
+    @media screen and (max-width: $tablet) {
+        grid-auto-flow: row;
+    }
+    li {
+        counter-increment: my-awesome-counter;
+        display: flex;
+        width: 100%;
+        font-size: 1em;
+        background: white;
+        align-items: center;
+        line-height: 1.1em;
+        padding: 0.9em 1em 0.5em 0;
+        padding-left: $lmargin + 2.4em;
+        justify-content: flex-start;
+        position: relative;
+        margin: 0;
+        .title {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 1.2em;
+        }
+        &:nth-of-type(even) {
+            background-color: mix(white, $light, 70%);
+            &:before {
+                background-color: mix(black, $light, 80%);
+            }
+        }
+        &:before {
+            content: counter(my-awesome-counter);
+            font-weight: bold;
+            font-size: 1.8em;
+            margin-right: 0.5em;
+            font-family: "Abril Fatface", serif;
+            line-height: 1;
+            color: white;
+            min-width: $lmargin;
+            text-align: center;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

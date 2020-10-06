@@ -1,0 +1,66 @@
+@import 'variables';
+@import 'pages/index';
+@import 'components/index';
+.gradient {
+    background-image: linear-gradient(45deg, $accent-gradient-1 0%, $accent-gradient-2 100%);
+    //background-image: linear-gradient(-225deg, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
+}
+.button {
+    &.filled {
+        &.color {
+            border-width: 3px;
+            border-right: 0;
+            border-left: 0;
+            &:hover {
+                border-bottom-color: $accent-main;
+                //color: #fff;
+                transition: all .2s;
+            }
+            &:active {
+                position: relative;
+                top: 1px;
+                transition: top .2s;
+            }
+        }
+    }
+}
+#site-menu .menu-item-search {
+    position: relative;
+}
+#site-menu .menu-item-search form {
+    padding-top: 10px;
+}
+
+#site-menu nav > ul > li.menu-item.hover {
+    @media (min-width: 768px) {
+        position: relative;
+        > a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0.75em;
+            width: 13px;
+            height: 2px;
+            background-color: $accent-main;
+            transition: background-color .2s;
+        }
+    }
+    @media (min-width: 992px) {
+        > a:after {
+            left: 1em;
+        }
+    }
+    @media (min-width: 1200px) {
+        > a:after {
+            left: 1.25em;
+        }
+    }
+}
+.b-lazy {
+    transition: 200ms filter;
+    filter: blur(2px);
+    overflow: hidden;
+}
+.b-lazy.b-loaded {
+    filter: blur(0px);
+}

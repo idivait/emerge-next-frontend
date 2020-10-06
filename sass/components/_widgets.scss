@@ -1,0 +1,7 @@
+.widget {
+    &.widget_categories, &.widget_archives {
+        li {
+            text-transform: capitalize;
+        }
+    }
+}

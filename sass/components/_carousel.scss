@@ -1,0 +1,129 @@
+.carousel .prev,
+.carousel .next {
+	position: absolute;
+	z-index: 5;
+	top: 50%;
+	width: 84px;
+	height: 40px;
+	margin-top: -20px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	color: #8899a6;
+}
+
+.carousel .prev:hover,
+.carousel .next:hover {
+	color: #292f33;
+}
+
+.carousel .prev i,
+.carousel .next i {
+	display: none;
+}
+
+.carousel .prev {
+	left: 10px;
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAUAQMAAAAHuKl8AAAABlBMVEX///8pLzPPkvdqAAAAAXRSTlMAQObYZgAAADdJREFUeNpjYIADBxijAUozwgSYYAwWGIMDxhCAMRRgjPr/EIBgKGAo5sAwEG4F3FK4MxAOgwIA9qQQ71CvnTsAAAAASUVORK5CYII=');
+	background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjY0cHgiIGhlaWdodD0iMjBweCIgdmlld0JveD0iMCAwIDY0IDIwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA2NCAyMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBvbHlnb24gcG9pbnRzPSI5LjEsMCAxMC42LDEuNSAzLjQsOSA2NCw5IDY0LDExIDMuNCwxMSAxMC43LDE4LjUgOS4xLDIwIDAsMTAuNyAwLDkuMyAiIHN0eWxlPSJmaWxsOiMyOTJmMzMiLz4NCjwvc3ZnPg=='), none;
+}
+
+.carousel .next {
+	right: 10px;
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAUBAMAAADPWCYMAAAAFVBMVEVMaXEpLzMpLzMpLzMpLzMpLzMpLzN8dI88AAAABnRSTlMAETNdzO6VIQQyAAAAMUlEQVR42mNgwA2MGPAD5lQF/AoY3YIIGCEydIxIww9SCSugzJWEHDkEDCCYYCBJDgAIJSNRGd9EEwAAAABJRU5ErkJggg==');
+	background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjY0cHgiIGhlaWdodD0iMjBweCIgdmlld0JveD0iMCAwIDY0IDIwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA2NCAyMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBvbHlnb24gcG9pbnRzPSI2NCw5LjMgNjQsMTAuNyA1NC45LDIwIDUzLjMsMTguNSA2MC42LDExIDAsMTEgMCw5IDYwLjYsOSA1My40LDEuNSA1NC45LDAiIHN0eWxlPSJmaWxsOiMyOTJmMzMiLz4NCjwvc3ZnPg=='), none;
+}
+
+.carousel.round-arrows .prev,
+.carousel.round-arrows .next {
+	top: 50%;
+	width: 60px;
+	height: 60px;
+	margin-top: -30px;
+	background: #fff;
+	border-radius: 100%;
+}
+
+.carousel.round-arrows .prev i,
+.carousel.round-arrows .next i {
+	display: block;
+	font-size: 1.5em;
+	line-height: 59px;
+}
+
+.carousel.round-arrows .prev {
+	left: 0;
+}
+
+.carousel.round-arrows .prev i {
+	margin-right: 1px;
+}
+
+.carousel.round-arrows .next {
+	right: 0;
+}
+
+.carousel.round-arrows .next i {
+	margin-left: 1px;
+}
+
+.carousel .dots {
+	position: absolute;
+	z-index: 6;
+	left: 0;
+	width: 100%;
+	bottom: 10px;
+	pointer-events: none;
+    display:flex !important;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.carousel .dots li {
+	display: inline-block;
+	padding: 0 4px;
+	pointer-events: auto;
+    margin: 0;
+}
+
+.carousel .dots li button {
+	display: inline-block;
+	width: 15px;
+	height: 4px;
+	border-radius: 1px;
+	background-color: #fff;
+    border: 0;
+    padding: 0;
+    color: transparent;
+    margin: 0;
+}
+
+.carousel .dots li.slick-active button {
+	background-color: #292f33;
+}
+
+.red-dots .dots li button {
+	background-color: #ccd6dd;
+}
+
+.red-dots .dots li.slick-active button {
+	background-color: #ff2641;
+}
+
+// Fix parent fill
+
+.slick-slide > div {
+	height: 100%;
+	> div {
+		height: 100%
+	}
+}
+
+// Fix foui on load
+.carousel {
+	opacity: 0;
+	overflow: hidden;
+}
+.carousel.slick-initialized {
+	opacity: 1
+}

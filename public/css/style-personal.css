@@ -1,0 +1,40 @@
+/* place your custom code here */
+.team-member .team-photo {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    border-radius: 100%;
+}
+.team-member .team-photo img {
+    position: absolute;
+    border-radius: 0;
+}
+.team-member .team-photo img {
+    border-radius: 0;
+}
+.author-profile #hero {
+    position: relative;
+}
+.author-profile #hero::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.5);
+}
+.author-profile #hero .inner {
+    position: relative;
+    z-index: 1;
+}
+.author-profile .social-share a {
+    color: #fff;
+}
+.continue-reading .owl-nav {
+    pointer-events: none;
+}
+.author-meta {
+    margin-top: 3rem;
+}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Layout from "@components/Layout";
 import Post from "@components/Post";
 import { getPreviewPostBySlug } from "lib/adminapi";
+import { updatePostIndex } from "@lib/algolia"
 
 export default function BlogPost({ siteTitle, content, error }) {
 //   Display 404 if there's an error in the props

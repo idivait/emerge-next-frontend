@@ -5,6 +5,7 @@ import PostList from "@components/PostList";
 
 import { getAllPosts } from "@lib/adminapi";
 import { generateRss } from "@lib/rss";
+import { updatePostIndex } from "@lib/algolia";
 
 const Index = ({ posts, title, description, url, ...props }) => {
   return (
@@ -45,6 +46,7 @@ export async function getStaticProps() {
 
   const posts = await getAllPosts();
 
+  // Create RSS feed from post data
   const rss = generateRss(
     posts.map(({ slug, title, custom_excerpt, excerpt, published_at }) => ({
       slug,
@@ -59,8 +61,15 @@ export async function getStaticProps() {
       description: configData.description,
     }
   );
-
   fs.writeFileSync('./public/rss.xml', rss);
+
+  // Update algolia index from post data
+  try {
+    const search = await updatePostIndex(posts)
+    console.log(`Added ${search.objectIDs.length} search objects.`);
+  } catch(err) {
+    console.error(err)
+  }
 
   return {
     props: {

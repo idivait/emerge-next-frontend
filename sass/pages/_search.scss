@@ -1,0 +1,17 @@
+form.gsc-search-box {
+    input[type="text"] {
+        color: black;
+    }
+    .gsc-clear-button {
+        vertical-align: top;
+    }
+}
+div.gsc-results-wrapper-visible {
+    .gsc-selected-option-container {
+        position: relative;
+    }
+    .gsc-selected-option {
+            position: relative;
+            min-width: 100px;
+    }
+}

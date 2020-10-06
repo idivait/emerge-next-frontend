@@ -1,0 +1,10 @@
+#top {
+    @media screen and (min-width: 992px){
+        padding-top: 1.5em;
+        padding-bottom: 1.5em;
+    }
+}
+.site-title svg {
+    width: 100%;
+    max-width: 75%;
+}

@@ -1,4 +1,9 @@
 Missing features:
-TODO Generate Sitemap
 TODO React svg
-TODO Algolia integration function
+TODO Algolia authors indexing
+
+Missing routes:
+TODO [page].js and page api call
+TODO author/[slug].js and author api call
+TODO tag/[tag].js with api call
+TODO index page redirect to current tag

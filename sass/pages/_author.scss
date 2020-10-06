@@ -1,0 +1,83 @@
+.author-profile {
+    .author-profile-image {
+        display: flex;
+        justify-content: center;
+        //align-items: flex-end;
+        width: 33.3333%;
+        img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 100%;
+            border: 5px solid white;
+        }
+        @media screen and (max-width: $tablet) {
+            width: 100%;
+        }
+    }
+    .author-name-group {
+        display: flex;
+        justify-content: stretch;
+        flex-direction: row-reverse;
+        padding: 0 10%;
+        header {
+            width: 66.6666%;
+            p {
+                line-height: 1.5em;
+            }
+        }
+        @media screen and (max-width: $tablet) {
+            flex-direction: column;
+            header {
+                text-align: center;
+                width: 100%;
+                p.author-bio {
+                    text-align: justify;
+                }
+            }
+        }
+    }
+    .author-meta {
+        display: flex;
+        //text-align: left;
+
+        width: 100%;
+        > section {
+            margin-right: 5rem;
+            ul {
+                margin-left: 0;
+                padding-left: 0rem;
+            }
+        }
+        @media screen and (max-width: $tablet) {
+            justify-content: center;
+            //align-items: center;
+            > section {
+                .sep.red,
+                .margin-1 {
+                    display: none;
+                }
+                margin-right: auto;
+                width: 50%;
+                h6 {
+                    margin-bottom: 0.5rem;
+                }
+                ul {
+                    list-style-type: none;
+                    padding-left: 0;
+                    margin-left: 0;
+                    li {
+                        padding-left: 0;
+                        margin-left: 0;
+                    }
+                }
+            }
+        }
+    }
+    .posts-grid {
+        margin-top: 1rem;
+        grid-template-columns: repeat(4, 1fr);
+        @media screen and (max-width: $tablet) {
+            grid-template-columns: 1fr;
+        }
+    }
+}

@@ -1,9 +1,8 @@
-import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "gatsby";
+import Link from "next/link";
 
 import { Navigation } from ".";
-import Logo from "../../../images/logo.inline.svg";
+import Logo from "@images/svg/logo.inline.svg";
 
 class Header extends React.Component {
     constructor(props) {
@@ -16,12 +15,6 @@ class Header extends React.Component {
             showMenu: !this.state.showMenu,
         });
     };
-
-    componentDidMount() {
-        // const ghostSearch = new GhostSearch({
-        //     input: "#ghost-search",
-        // });
-    }
 
     render() {
         const { site } = this.props;
@@ -38,7 +31,8 @@ class Header extends React.Component {
                     <div className="inner">
                         <div className="site-title">
                             <h1>
-                                <Link to="/">
+                                <Link href="/">
+                                    <a>
                                     {site.logo ? (
                                         <img
                                             src={site.logo}
@@ -50,6 +44,7 @@ class Header extends React.Component {
                                     ) : (
                                         <Logo alt={site.title} />
                                     )}
+                                    </a>
                                 </Link>
                             </h1>
                             <a
@@ -71,9 +66,6 @@ class Header extends React.Component {
                                         data={site.navigation}
                                         navclassName="menu-item"
                                     />
-                                    {/* <li className="search">
-                                        <Search indices={searchIndices} />
-                                    </li> */}
                                 </ul>
                             </nav>
                         </div>

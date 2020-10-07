@@ -15,5 +15,15 @@
   to = "/rss.xml"
   status = 200
   force = true
+[[redirects]]
+  from = "/"
+  to = "/tag/hash-current/1"
+  status = 200
+  force = true
+[[redirects]]
+  from = "/tag/:slug:"
+  to = "/tag/:slug:/1"
+  status = 200
+  force = true
 [[plugins]]
 package = "@netlify/plugin-sitemap"

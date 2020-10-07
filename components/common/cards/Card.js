@@ -1,6 +1,6 @@
-import React from "react";
+
 import PropTypes from "prop-types";
-import { Link } from "gatsby";
+import Link from "next/link";
 import { BGImage } from "../images";
 
 const Card = ({
@@ -19,12 +19,13 @@ const Card = ({
         <div className={`box ${className} ${overlay && "overlay"}`}>
             <div className="post-box vertical">
                 <Link
-                    to={url}
-                    className={
+                    href={url}
+                >
+                    <a  
+                        className={
                         `image-link ${!overlay && "arrow-icon"} dark-overlay ` +
                         (!image && `gradient`)
-                    }
-                >
+                    }>
                     {image && (
                         <BGImage
                             source={image}
@@ -36,6 +37,7 @@ const Card = ({
                     {overlay && (
                         <div className="overlay-container">{overlay}</div>
                     )}
+                    </a>
                 </Link>
                 <div className="extra-info">{children}</div>
             </div>

@@ -1,22 +1,24 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "gatsby";
+import Link from 'next/link';
+import { Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 const ByAuthors = ({ authors }) => (
     <>
         {` `}
         by{` `}
         {authors.map((author, i) => (
-            <>
-                <Link to={`/author/${author.slug}/`}>{author.name}</Link>
-                {i < authors.length - 1 && authors.length > 1 ? " and " : ""}
-            </>
+            <Fragment key={author.id}>
+                <Link href={`/author/${author.slug}/`}>
+                    <a>{author.name}</a>
+                </Link>
+                {i < authors.length - 1 && authors.length > 1 ? ' and ' : ''}
+            </Fragment>
         ))}
     </>
 );
 
 ByAuthors.propTypes = {
-    authors: PropTypes.object.isRequired,
+    authors: PropTypes.array.isRequired
 };
 
 export default ByAuthors;

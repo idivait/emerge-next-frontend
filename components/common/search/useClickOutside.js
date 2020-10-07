@@ -1,10 +1,9 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 const events = [`mousedown`, `touchstart`];
 
-export default (ref, onClickOutside) => {
-    const isOutside = (element) =>
-        !ref.current || !ref.current.contains(element);
+const onClickOutside = (ref, onClickOutside) => {
+    const isOutside = (element) => !ref.current || !ref.current.contains(element);
 
     const onClick = (event) => {
         if (isOutside(event.target)) {
@@ -18,8 +17,9 @@ export default (ref, onClickOutside) => {
         }
 
         return () => {
-            for (const event of events)
-                document.removeEventListener(event, onClick);
+            for (const event of events) document.removeEventListener(event, onClick);
         };
     });
 };
+
+export default onClickOutside;

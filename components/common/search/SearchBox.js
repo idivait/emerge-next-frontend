@@ -1,4 +1,4 @@
-import React from "react";
+
 import { connectSearchBox } from "react-instantsearch-dom";
 import { SearchOutline as SearchIcon } from "@styled-icons/evaicons-outline/SearchOutline";
 import { CloseOutline as CloseIcon } from "@styled-icons/evaicons-outline/CloseOutline";

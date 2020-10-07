@@ -1,5 +1,6 @@
-import { useStaticQuery, graphql } from "gatsby"
 export const getTagData= (slug) => {
+    // TODO convert getTagData calls to @api
+    return {}
   const { allGhostTag } = useStaticQuery(
     graphql`
         query tagFilter {

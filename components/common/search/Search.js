@@ -1,24 +1,21 @@
-import algoliasearch from "algoliasearch/lite";
-import { createRef, default as React, useState } from "react";
-import { InstantSearch } from "react-instantsearch-dom";
-import SearchBox from "./SearchBox";
-import SearchResult from "./SearchResult";
-import useClickOutside from "./useClickOutside";
-
-// TODO: Search author pages
+import algoliasearch from 'algoliasearch/lite';
+import { createRef, default as React, useState } from 'react';
+import { InstantSearch } from 'react-instantsearch-dom';
+import SearchBox from './SearchBox';
+import SearchResult from './SearchResult';
+import useClickOutside from './useClickOutside';
 
 export default function Search({ indices }) {
     const rootRef = createRef();
     const [query, setQuery] = useState();
     const [hasFocus, setFocus] = useState(false);
-    const searchClient = algoliasearch(
-        process.env.GATSBY_ALGOLIA_APP_ID,
-        process.env.GATSBY_ALGOLIA_SEARCH_KEY
-    );
+    const app_id = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID;
+    const search_key = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY;
+    if (!app_id || !search_key) return <></>;
+    const searchClient = algoliasearch(app_id, search_key);
 
     useClickOutside(rootRef, () => {
-        if (window.matchMedia("(min-width: 768px)").matches) {
-            console.log("media check");
+        if (window.matchMedia('(min-width: 768px)').matches) {
             setFocus(false);
         }
     });
@@ -28,8 +25,7 @@ export default function Search({ indices }) {
             <InstantSearch
                 searchClient={searchClient}
                 indexName={indices[0].name}
-                onSearchStateChange={({ query }) => setQuery(query)}
-            >
+                onSearchStateChange={({ query }) => setQuery(query)}>
                 <SearchBox
                     className={`SearchForm`}
                     onFocus={() => setFocus(true)}

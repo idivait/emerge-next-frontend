@@ -1,9 +1,9 @@
-import React from "react";
-import { Link } from "gatsby";
 
-import config from "../../../utils/siteConfig";
-import Logo from "../../../images/logo.inline.svg";
-import MemberImages from "../../../images/member";
+import Link from "next/link";
+
+import config from "@config";
+import Logo from "@images/svg/logo.inline.svg";
+import MemberImages from "@images/svg/member";
 
 const Footer = ({ site }) => {
     const now = new Date();
@@ -12,7 +12,8 @@ const Footer = ({ site }) => {
         <footer id="footer" role="contentinfo">
             <div className="container">
                 <p>
-                    <Link to="/" className="mini-logo">
+                    <Link href="/">
+                        <a className="mini-logo">
                         {site.logo ? (
                             <img
                                 src={site.logo}
@@ -23,6 +24,7 @@ const Footer = ({ site }) => {
                         ) : (
                             <Logo />
                         )}
+                        </a>
                     </Link>
                 </p>
                 <p>
@@ -38,10 +40,10 @@ const Footer = ({ site }) => {
                     </a>
                 </p>
                 <hr />
-                <p className="member-logos">
+                <div className="member-logos">
                     <h6>Proud Member of</h6>
                     <MemberImages />
-                </p>
+                </div>
                 <hr />
                 <p>Disclaimer: {disclaimer}</p>
             </div>

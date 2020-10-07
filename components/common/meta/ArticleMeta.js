@@ -1,6 +1,4 @@
-import React from 'react'
-import Helmet from "react-helmet"
-import { StaticQuery, graphql } from 'gatsby'
+import Head from "next/head"
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import url from 'url'
@@ -12,14 +10,16 @@ import config from '@config'
 import { tags as tagsHelper } from '@tryghost/helpers'
 
 const ArticleMetaGhost = ({ data, settings, canonical }) => {
+    
     const ghostPost = data
-    settings = settings.allGhostSettings.edges[0].node
+    settings = settings
 
     const author = getAuthorProperties(ghostPost.primary_author)
+    if(!author) return <></>
     const publicTags = _.map(tagsHelper(ghostPost, { visibility: `public`, fn: tag => tag }), `name`)
     const primaryTag = publicTags[0] || ``
     const shareImage = ghostPost.feature_image ? ghostPost.feature_image : _.get(settings, `cover_image`, null)
-    const publisherLogo = (settings.logo || config.siteIcon) ? url.resolve(config.siteUrl, (settings.logo || config.siteIcon)) : null
+    const publisherLogo = (settings.logo || config.siteIcon) ? url.resolve(config.url, (settings.logo || config.siteIcon)) : null
 
     const jsonLd = {
         "@context": `https://schema.org/`,
@@ -54,13 +54,13 @@ const ArticleMetaGhost = ({ data, settings, canonical }) => {
         description: ghostPost.meta_description || ghostPost.excerpt,
         mainEntityOfPage: {
             "@type": `WebPage`,
-            "@id": config.siteUrl,
+            "@id": config.url,
         },
     }
 
     return (
         <>
-            <Helmet>
+            <Head>
                 <title>{ghostPost.meta_title || ghostPost.title}</title>
                 <meta name="description" content={ghostPost.meta_description || ghostPost.excerpt} />
                 <link rel="canonical" href={canonical} />
@@ -110,7 +110,7 @@ const ArticleMetaGhost = ({ data, settings, canonical }) => {
                 {settings.twitter && <meta name="twitter:site" content={`https://twitter.com/${settings.twitter.replace(/^@/, ``)}/`} />}
                 {settings.twitter && <meta name="twitter:creator" content={settings.twitter} />}
                 <script type="application/ld+json">{JSON.stringify(jsonLd, undefined, 4)}</script>
-            </Helmet>
+            </Head>
             <ImageMeta image={shareImage} />
         </>
     )
@@ -141,18 +141,11 @@ ArticleMetaGhost.propTypes = {
         twitter_description: PropTypes.string,
         excerpt: PropTypes.string.isRequired,
     }).isRequired,
-    settings: PropTypes.shape({
-        logo: PropTypes.object,
-        title: PropTypes.string,
-        twitter: PropTypes.string,
-        allGhostSettings: PropTypes.object.isRequired,
-    }).isRequired,
+    settings: PropTypes.object,
     canonical: PropTypes.string.isRequired,
 }
 
-const ArticleMetaQuery = props => (
-    <StaticQuery
-        query={graphql`
+const ArticleMetaQuery = `
             query GhostSettingsArticleMeta {
                 allGhostSettings {
                     edges {
@@ -162,9 +155,6 @@ const ArticleMetaQuery = props => (
                     }
                 }
             }
-        `}
-        render={data => <ArticleMetaGhost settings={data} {...props} />}
-    />
-)
+        `;
 
-export default ArticleMetaQuery
+export default ArticleMetaGhost

@@ -1,22 +1,18 @@
-// import React from 'react'
-import Helmet from "react-helmet"
+import Head from "next/head"
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-// import { StaticQuery, graphql } from 'gatsby'
 import url from 'url'
 
 import ImageMeta from './ImageMeta'
-// import config from '@config'
+import config from '@config'
 
-const WebsiteMeta = ({ data, config, settings, canonical, title, description, image, type }) => {
-    settings = settings.allGhostSettings.edges[0].node
+const WebsiteMeta = ({ data, settings, canonical, title, description, image, type }) => {
 
-    const publisherLogo = url.resolve(config.siteUrl, (settings.logo || config.siteIcon))
+    const publisherLogo = url.resolve(config.url, (settings.logo))
     let shareImage = image || data.feature_image || _.get(settings, `cover_image`, null)
-
-    shareImage = shareImage ? url.resolve(config.siteUrl, shareImage) : null
-
-    description = description || data.meta_description || data.description || config.siteDescriptionMeta || settings.description
+    shareImage = shareImage ? url.resolve(config.url, shareImage) : null
+    
+    description = description || data.meta_description || data.description || config.description || settings.description
     title = `${title || data.meta_title || data.name || data.title} - ${settings.title}`
 
     const jsonLd = {
@@ -42,14 +38,14 @@ const WebsiteMeta = ({ data, config, settings, canonical, title, description, im
         },
         mainEntityOfPage: {
             "@type": `WebPage`,
-            "@id": config.siteUrl,
+            "@id": config.url,
         },
         description,
     }
 
     return (
         <>
-            <Helmet>
+            <Head>
                 <title>{title}</title>
                 <meta name="description" content={description} />
                 <link rel="canonical" href={canonical} />
@@ -64,7 +60,7 @@ const WebsiteMeta = ({ data, config, settings, canonical, title, description, im
                 {settings.twitter && <meta name="twitter:site" content={`https://twitter.com/${settings.twitter.replace(/^@/, ``)}/`} />}
                 {settings.twitter && <meta name="twitter:creator" content={settings.twitter} />}
                 <script type="application/ld+json">{JSON.stringify(jsonLd, undefined, 4)}</script>
-            </Helmet>
+            </Head>
             <ImageMeta image={shareImage} />
         </>
     )
@@ -81,35 +77,12 @@ WebsiteMeta.propTypes = {
         bio: PropTypes.string,
         profile_image: PropTypes.string,
     }).isRequired,
-    settings: PropTypes.shape({
-        logo: PropTypes.object,
-        description: PropTypes.string,
-        title: PropTypes.string,
-        twitter: PropTypes.string,
-        allGhostSettings: PropTypes.object.isRequired,
-    }).isRequired,
+    settings: PropTypes.object,
     canonical: PropTypes.string.isRequired,
     title: PropTypes.string,
     description: PropTypes.string,
     image: PropTypes.string,
     type: PropTypes.oneOf([`WebSite`, `Series`]).isRequired,
 }
-
-// const WebsiteMetaQuery = props => (
-//     <StaticQuery
-//         query={graphql`
-//             query GhostSettingsWebsiteMeta {
-//                 allGhostSettings {
-//                     edges {
-//                         node {
-//                             ...GhostSettingsFields
-//                         }
-//                     }
-//                 }
-//             }
-//         `}
-//         render={data => <WebsiteMeta settings={data} {...props} />}
-//     />
-// )
 
 export default WebsiteMeta

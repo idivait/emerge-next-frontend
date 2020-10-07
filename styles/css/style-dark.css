@@ -39,7 +39,7 @@ h6.heading span {
 }
 
 h6.heading:after {
-	background-color: #ccd6dd\9\0;
+	background-color: #ccd6dd;
 	background-image: -webkit-linear-gradient(left, #66757F, rgba(45, 51, 55, 0));
 	background-image: linear-gradient(to right, #66757F, rgba(45, 51, 55, 0));
 }
@@ -370,7 +370,7 @@ a:focus {
 }
 
 #top.open-mobile-menu .site-menu-toggle em.middle { 
-	background-color: #ffffff\9\0;
+	background-color: #ffffff;
 }
 
 #site-menu li {

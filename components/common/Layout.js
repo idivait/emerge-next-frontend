@@ -1,39 +1,30 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Helmet from "react-helmet";
-import { StaticQuery, graphql } from "gatsby";
+import PropTypes from 'prop-types';
+import Head from 'next/head';
 
-import { Header, Footer } from "./structure";
-
-// Styles
-import "../../styles/css/font-awesome.min.css";
-import "../../styles/css/style.css";
-import "../../styles/css/style-dark.css";
-import "../../styles/css/style-personal.css";
-import "../../styles/sass/main.scss";
+import { Header, Footer } from './structure';
+import { Component } from 'react';
 
 /**
  * Main layout component
  *
  * The Layout component wraps around each page and template.
  * It also provides the header, footer as well as the main
- * styles, and meta data for each page. test
+ * styles, and meta data for each page.
  *
  */
-class DefaultLayout extends React.Component {
+class DefaultLayout extends Component {
     render() {
-        const { data, children, bodyClass, isHome } = this.props;
-        const site = data.allGhostSettings.edges[0].node;
-        const twitterUrl = site.twitter
-            ? `https://twitter.com/${site.twitter.replace(/^@/, ``)}`
-            : null;
-        const facebookUrl = site.facebook
-            ? `https://www.facebook.com/${site.facebook.replace(/^\//, ``)}`
-            : null;
+        const { site, children, bodyClass } = this.props;
+        // const twitterUrl = site.twitter
+        //     ? `https://twitter.com/${site.twitter.replace(/^@/, ``)}`
+        //     : null;
+        // const facebookUrl = site.facebook
+        //     ? `https://www.facebook.com/${site.facebook.replace(/^\//, ``)}`
+        //     : null;
 
         return (
             <>
-                <Helmet>
+                <Head>
                     <html lang={site.lang} />
                     <title>{site.title}</title>
                     <link
@@ -45,19 +36,16 @@ class DefaultLayout extends React.Component {
                     <link
                         href="//fonts.googleapis.com/css?family=Playfair+Display:400,400italic%7CRoboto:400,700%7CDroid+Serif"
                         rel="stylesheet"
-                        type="text/css"
-                    ></link>
+                        type="text/css"></link>
                     <body className={bodyClass} />
                     <script
                         type="text/javascript"
-                        src="//code.jquery.com/jquery-1.12.0.min.js"
-                    ></script>
+                        src="//code.jquery.com/jquery-1.12.0.min.js"></script>
                     <script
                         type="text/javascript"
-                        src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
-                    ></script>
+                        src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
                     {site.codeinjection_head}
-                </Helmet>
+                </Head>
                 <Header site={site} />
                 <div className="site-wrapper">
                     {children}
@@ -72,26 +60,7 @@ DefaultLayout.propTypes = {
     children: PropTypes.node.isRequired,
     bodyClass: PropTypes.string,
     isHome: PropTypes.bool,
-    data: PropTypes.shape({
-        allGhostSettings: PropTypes.object.isRequired,
-    }).isRequired,
+    site: PropTypes.object.isRequired
 };
 
-const DefaultLayoutSettingsQuery = (props) => (
-    <StaticQuery
-        query={graphql`
-            query GhostSettings {
-                allGhostSettings {
-                    edges {
-                        node {
-                            ...GhostSettingsFields
-                        }
-                    }
-                }
-            }
-        `}
-        render={(data) => <DefaultLayout data={data} {...props} />}
-    />
-);
-
-export default DefaultLayoutSettingsQuery;
+export default DefaultLayout;

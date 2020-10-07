@@ -1,6 +1,6 @@
-import React from "react";
+
 import PropTypes from "prop-types";
-import { Link } from "gatsby";
+import Link from "next/link";
 import { readingTime as readingTimeHelper } from "@tryghost/helpers";
 
 import { Card } from ".";
@@ -17,7 +17,9 @@ const PostCard = ({ post }) => {
     return (
         <Card url={url} image={post.feature_image}>
             <h5>
-                <a href={url}>{post.title}</a>
+                <Link href={url}>
+                    <a>{post.title}</a>
+                </Link> 
             </h5>
             <span className="author">
                 <ByAuthors authors={authors} />

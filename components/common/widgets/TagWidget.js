@@ -1,17 +1,17 @@
-import React from 'react'
+ 
 import PropTypes from 'prop-types'
-import { Link } from 'gatsby'
+import Link from 'next/link'
 
 import Widget from './Widget'
-import { getTagData } from './TagQuery'
+// import { getTagData } from './TagQuery'
 
-const TagWidget = ({ title, className, regex })=>{
-    const tags = getTagData()
+const TagWidget = ({ title, className, regex, tags })=>{
+    return<></>;
     let filter_tags = tags
     if (regex) {
         regex = RegExp(regex)
         filter_tags = tags.filter(tag=>{
-            return regex.test(tag.node.slug)
+            return regex.test(tag.slug)
         })
     }
     return (
@@ -20,8 +20,8 @@ const TagWidget = ({ title, className, regex })=>{
                 { filter_tags.map(tag=>{
                     return (
                         <li class="cat-item">
-                            <Link to={`/tag/${tag.node.slug}/`}>
-                                {tag.node.name}
+                            <Link href={`/tag/${tag.slug}/`}>
+                                <a>{tag.name}</a>
                             </Link>
                         </li>
                     )

@@ -1,35 +1,33 @@
-import React from "react";
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import Showdown from "showdown";
+import Showdown from 'showdown';
 var noMorePsExt = {
-    type: "output",
-    filter: function (text, converter) {
+    type: 'output',
+    filter: function (text) {
         var re = /<\/?p[^>]*>/gi;
-        text = text.replace(re, "");
+        text = text.replace(re, '');
         return text;
-    },
+    }
 };
 const converter = new Showdown.Converter({ extensions: [noMorePsExt] });
 
 const isLink = (link) => {
-    const regex = /<a href=\"([^\"]*)\">(.*)<\/a>/i;
+    const regex = /<a href="([^"]*)">(.*)<\/a>/i;
     return regex.exec(link);
 };
 
 const WebsiteList = ({ title, website, location, className }) => {
-    const locations =
-        location && location.split(",").map((loc) => converter.makeHtml(loc));
+    const locations = location && location.split(',').map((loc) => converter.makeHtml(loc));
 
-    const Icon = () => <i className={"fa-li fa " + className}></i>;
+    const Icon = () => <i className={'fa-li fa ' + className}></i>;
 
     return (
-        <div className={"webslist "}>
+        <div className={'webslist '}>
             {title && <h6 className="title">{title}</h6>}
-            <ul className={className && "fa-ul"}>
+            <ul className={className && 'fa-ul'}>
                 <li>
                     <Icon />
-                    <a href={website} target="_blank">
+                    <a href={website} target="_blank" rel="noreferrer">
                         Author Site
                     </a>
                 </li>
@@ -41,13 +39,13 @@ const WebsiteList = ({ title, website, location, className }) => {
                         return (
                             <li key={i}>
                                 {className && <Icon />}
-                                <a href={link[1]} target="_blank">
+                                <a href={link[1]} target="_blank" rel="noreferrer">
                                     {link[2]}
                                 </a>
                             </li>
                         );
                     })) ||
-                    ""}
+                    ''}
             </ul>
         </div>
     );
@@ -57,7 +55,7 @@ WebsiteList.propTypes = {
     title: PropTypes.string,
     website: PropTypes.string,
     location: PropTypes.string,
-    className: PropTypes.string,
+    className: PropTypes.string
 };
 
 export default WebsiteList;

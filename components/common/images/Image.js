@@ -1,4 +1,4 @@
-import React from "react";
+
 
 import { buildOpts, imageProps, preloadImage, editImage } from "./utils";
 

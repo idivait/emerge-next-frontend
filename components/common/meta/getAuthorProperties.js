@@ -2,6 +2,7 @@ import _ from 'lodash'
 import PropTypes from 'prop-types'
 
 export const getAuthorProperties = (primaryAuthor) => {
+    if(!primaryAuthor) return
     let authorProfiles = []
 
     authorProfiles.push(

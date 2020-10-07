@@ -1,6 +1,6 @@
-import React from 'react'
+ 
 import PropTypes from 'prop-types'
-import { Link } from 'gatsby'
+import Link from 'next/link'
 
 const Pagination = ({ pageContext, className }) => {
     const { previousPagePath, nextPagePath, humanPageNumber, numberOfPages } = pageContext
@@ -10,8 +10,8 @@ const Pagination = ({ pageContext, className }) => {
             <div>
                 {previousPagePath && (
 
-                    <Link to={previousPagePath} rel="prev">
-                            Prev
+                    <Link href={previousPagePath} rel="prev">
+                        <a>Prev</a>
                     </Link>
 
                 )}
@@ -20,8 +20,8 @@ const Pagination = ({ pageContext, className }) => {
             <div>
                 {nextPagePath && (
 
-                    <Link to={nextPagePath} rel="next">
-                            Next
+                    <Link href={nextPagePath} rel="next">
+                        <a>Next</a>
                     </Link>
                 )}
             </div>

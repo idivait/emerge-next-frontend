@@ -1,8 +1,6 @@
-import React from 'react'
-import Helmet from 'react-helmet'
+import Head from 'next/head'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { StaticQuery, graphql } from 'gatsby'
 
 import ImageMeta from './ImageMeta'
 import getAuthorProperties from './getAuthorProperties'
@@ -30,14 +28,14 @@ const AuthorMeta = ({ data, settings, canonical }) => {
         } : undefined,
         mainEntityOfPage: {
             "@type": `WebPage`,
-            "@id": config.siteUrl,
+            "@id": config.url,
         },
         description,
     }
 
     return (
         <>
-            <Helmet>
+            <Head>
                 <title>{title}</title>
                 <meta name="description" content={description} />
                 <link rel="canonical" href={canonical} />
@@ -52,7 +50,7 @@ const AuthorMeta = ({ data, settings, canonical }) => {
                 {settings.twitter && <meta name="twitter:site" content={`https://twitter.com/${settings.twitter.replace(/^@/, ``)}/`} />}
                 {settings.twitter && <meta name="twitter:creator" content={settings.twitter} />}
                 <script type="application/ld+json">{JSON.stringify(jsonLd, undefined, 4)}</script>
-            </Helmet>
+            </Head>
             <ImageMeta image={shareImage} />
         </>
     )
@@ -76,9 +74,7 @@ AuthorMeta.propTypes = {
     canonical: PropTypes.string.isRequired,
 }
 
-const AuthorMetaQuery = props => (
-    <StaticQuery
-        query={graphql`
+const AuthorMetaQuery = `
             query GhostSettingsAuthorMeta {
                 allGhostSettings {
                     edges {
@@ -88,9 +84,6 @@ const AuthorMetaQuery = props => (
                     }
                 }
             }
-        `}
-        render={data => <AuthorMeta settings={data} {...props} />}
-    />
-)
+        `;
 
-export default AuthorMetaQuery
+export default AuthorMeta

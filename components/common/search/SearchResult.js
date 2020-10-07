@@ -1,4 +1,4 @@
-import { Link } from "gatsby"
+import Link from "next/link"
 import { default as React } from "react"
 import {
     connectStateResults,
@@ -59,28 +59,30 @@ const HitCount = connectStateResults(({ searchResults }) => {
 const PageHit = ({ hit, indexName }) => {
     const isAuthor = indexName === `ghost_authors`
     return (
-        <Link to={`${isAuthor ? `/author` : ``}/${hit.slug}/`}>
-            <div>
-                <span>
-                    <Highlight attribute={isAuthor ? `name` : `title`} hit={hit} tagName="mark" />
-                    {!isAuthor && (
-                        <>
-                            <br />
-                            <span className="author">
-                            by{` `}
-                                <Highlight
-                                    attribute="primary_author.name"
-                                    hit={hit}
-                                    tagName="mark"
-                                />
-                            </span>
-                        </>
-                    )}
-
-                </span>
-
-                <Snippet attribute={isAuthor ? `bio` : `excerpt`} hit={hit} tagName="mark" />
-            </div>
+        <Link href={`${isAuthor ? `/author` : ``}/${hit.slug}/`}>
+            <a>
+                <div>
+                    <span>
+                        <Highlight attribute={isAuthor ? `name` : `title`} hit={hit} tagName="mark" />
+                        {!isAuthor && (
+                            <>
+                                <br />
+                                <span className="author">
+                                by{` `}
+                                    <Highlight
+                                        attribute="primary_author.name"
+                                        hit={hit}
+                                        tagName="mark"
+                                    />
+                                </span>
+                            </>
+                        )}
+    
+                    </span>
+    
+                    <Snippet attribute={isAuthor ? `bio` : `excerpt`} hit={hit} tagName="mark" />
+                </div>
+            </a>
         </Link>
     )
 }

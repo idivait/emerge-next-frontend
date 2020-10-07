@@ -5,7 +5,9 @@
       "@components/*": ["components/*"],
       "@utils/*": ["utils/*"],
       "@lib/*": ["lib/*"],
-      "@config": ["siteconfig.json"]
+      "@config": ["siteconfig.json"],
+      "@images/*": ["images/*"],
+      "@styles/*": ["styles/*"]
     }
   }
 }

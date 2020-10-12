@@ -101,7 +101,13 @@ export async function getStaticProps({ ...ctx }) {
         filter: `status:'published'+tag:'hash-letter'`,
         limit: 1
     });
-    const tags = await getAllTags({ fields: 'slug,name' });
+
+    // TODO: Send tag data to TagWidget
+    // slug
+    // name
+    // postCount
+    // id
+    const tags = await getAllTags({ fields: 'slug,name,id,count', include: 'count.posts' });
     const settings = await getSiteSettings();
     // TODO figure out sort based on
     // { order: DESC, fields: [published_at] }

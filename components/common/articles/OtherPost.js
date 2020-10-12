@@ -1,5 +1,3 @@
-// TODO: Split this mess into multiple post components, especially the bottom widgets
-
 const OtherPost = ({ post, type }) => {
     const { title, feature_image, url, primary_author } = post;
     return (

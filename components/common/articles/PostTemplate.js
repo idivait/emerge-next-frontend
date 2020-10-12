@@ -7,6 +7,7 @@ import { DateTime } from 'luxon';
 // import WebsiteList from '@components/common/authors/WebsiteList';
 // import ByAuthors from '@components/common/authors/ByAuthors';
 
+// TODO: Split this mess into multiple post components, especially the bottom widgets
 // TODO: Import subcomponents
 // TODO: set props
 // TODO: Set proptypes

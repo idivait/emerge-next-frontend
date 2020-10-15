@@ -1,3 +1,4 @@
-export { default as Header } from "./Header";
-export { default as Navigation } from "./Navigation";
-export { default as Footer } from "./Footer";
+export Footer from './Footer.js';
+export Header from './Header.js';
+export Navigation from './Navigation.js';
+export SidebarLayout from './SidebarLayout.js';

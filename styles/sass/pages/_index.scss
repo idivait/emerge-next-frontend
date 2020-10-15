@@ -55,6 +55,7 @@ nav.pagination {
     display: flex;
     width: 100%;
     margin: 0 !important;
+    overflow: hidden;
     .featured {
         background-size: cover;
         background-position: center center;
@@ -155,11 +156,19 @@ nav.pagination {
             span.author {
                 flex: 1;
             }
-            p.meta {
+            audio {
+                margin-bottom: 1em;
+            }
+            p.meta, div.meta, .meta {
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
                 margin-top: 1em;
+                h1, h2, h3, h4, h5, h6 {
+                    font-size: 1em;
+                    margin: 0;
+                    all: unset;
+                }
                 i {
                     margin-right: 0.2em;
                 }

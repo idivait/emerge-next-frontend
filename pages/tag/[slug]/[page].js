@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 // eslint-disable-next-line no-unused-vars
 import { Layout, Pagination, WidgetWrapper, Featured, SlickSlider } from '@components/common';
+import { SidebarLayout } from '@components/common/structure';
 import { PostCard } from '@components/common/cards';
 import { MetaData } from '@components/common/meta';
 import { getAllTags, getPostsByTag, getTag } from '@lib/adminapi';
@@ -19,11 +20,40 @@ import config from '@config';
  *
  */
 const Sidebar = ({ posts, tags, letter, featured, tag, slug, settings }) => {
+    const FeaturedPosts = () => (
+        <SlickSlider>
+            {!letter && <Featured key={tag.id} tag={tag} />}
+            {letter && <Featured key={letter.id} post={letter} />}
+            {featured.map((node) => (
+                <Featured key={node.id} post={node} />
+            ))}
+        </SlickSlider>
+    );
+    const Content = () => (
+        <>
+            {posts.map((node) => {
+                // Exclude letters
+                if (node.tags.find((tag) => tag.name === '#letter')) {
+                    return;
+                }
+                // The tag below includes the markup for each post - components/common/PostCard.js
+                return <PostCard key={node.id} post={node} />;
+            })}
+        </>
+    );
+    const Widgets = () => (
+        <WidgetWrapper site={{ description: settings.description }} tags={tags} />
+    );
     return (
         <>
             <MetaData type="tag" location={{ pathname: slug }} settings={settings} />
             <Layout isHome={true} site={settings}>
-                <main id="content" className="content" role="main">
+                <SidebarLayout
+                    featured={<FeaturedPosts />}
+                    content={<Content />}
+                    sidebar={<Widgets />}
+                />
+                {/* <main id="content" className="content" role="main">
                     <div className="container container-masonry">
                         <div className="inner">
                             <div className="row">
@@ -49,13 +79,13 @@ const Sidebar = ({ posts, tags, letter, featured, tag, slug, settings }) => {
                                             return <PostCard key={node.id} post={node} />;
                                         })}
                                     </div>
-                                    {/* TODO: Fix Pagination component */}
-                                    {/* <div className="row">
+                                    /* TODO: Fix Pagination component 
+                                    <div className="row">
                                         <Pagination
                                             pageContext={pageContext}
                                             className="col-sm-12"
                                         />
-                                    </div> */}
+                                    </div>
                                 </div>
                                 <div className="col-sm-3">
                                     <WidgetWrapper
@@ -66,7 +96,7 @@ const Sidebar = ({ posts, tags, letter, featured, tag, slug, settings }) => {
                             </div>
                         </div>
                     </div>
-                </main>
+                </main> */}
             </Layout>
         </>
     );
@@ -95,19 +125,25 @@ export default Sidebar;
 // TODO: Limit pages by config setting
 export async function getStaticProps({ ...ctx }) {
     const { slug: tagSlug, page } = ctx.params;
-    const tag = await getTag(tagSlug);
+    const tag = await getTag(tagSlug, { include: 'count.posts' });
     const posts = await getPostsByTag(tagSlug, { limit: 7, page });
     const letter = await getPostsByTag(tagSlug, {
-        filter: `status:'published'+tag:'hash-letter'`,
+        filter: `status:'published'+tag:'hash-letter'+tag:'${tagSlug}'`,
         limit: 1
     });
 
-    // TODO: Send tag data to TagWidget
-    // slug
-    // name
-    // postCount
-    // id
-    const tags = await getAllTags({ fields: 'slug,name,id,count', include: 'count.posts' });
+    const all_tags = await getAllTags({ fields: null, include: 'count.posts' });
+    const tags = all_tags.reduce((total, { id, slug, name, count }) => {
+        const t = {
+            id,
+            slug,
+            name,
+            postCount: count.posts
+        };
+        if (t.postCount === 0) return total;
+        total.push(t);
+        return total;
+    }, []);
     const settings = await getSiteSettings();
     // TODO figure out sort based on
     // { order: DESC, fields: [published_at] }
@@ -116,18 +152,20 @@ export async function getStaticProps({ ...ctx }) {
         limit: 5
     });
 
+    const props = {
+        url: config.url,
+        slug: tagSlug,
+        siteTitle: config.title,
+        tag: tag || null,
+        letter: letter.length > 0 ? letter[0] : null,
+        featured: featured || null,
+        posts: posts || null,
+        tags: tags || null,
+        settings: settings || null
+    };
+
     return {
-        props: {
-            url: config.url,
-            slug: tagSlug,
-            siteTitle: config.title,
-            tag: tag || null,
-            letter: letter ? letter[0] : null,
-            featured: featured || null,
-            posts: posts || null,
-            tags: tags || null,
-            settings: settings || null
-        }
+        props
     };
 }
 

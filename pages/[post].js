@@ -15,19 +15,15 @@ import { getSiteSettings } from '@lib/contentapi';
  */
 const Post = ({ settings, ...postProps }) => {
     const { post } = postProps;
+    const location = new URL(settings.url + post.slug);
     return (
         <>
-            <MetaData
-                data={post}
-                settings={settings}
-                location={{ pathname: post.slug }}
-                type="article"
-            />
+            <MetaData data={post} settings={settings} location={location} type="article" />
             <Head>
                 <style type="text/css">{`${post.codeinjection_styles}`}</style>
             </Head>
             <Layout site={settings}>
-                <PostTemplate {...postProps} />
+                <PostTemplate location={location} {...postProps} />
             </Layout>
         </>
     );
@@ -67,7 +63,17 @@ export async function getStaticProps({ ...ctx }) {
     const { post: slug } = ctx.params;
     const settings = await getSiteSettings();
     const post = await getPostBySlug(slug);
-    const { published_at } = post;
+    const { tags, plaintext, published_at } = post;
+    const issue = tags.find((tag) => tag.slug.startsWith('issue'));
+    // sort: { order: DESC, fields: [published_at] }
+    // filter: {
+    //     tags: { elemMatch: { name: { eq: $issue, nin: "#letter" } } }
+    // }
+    const TOCparams = {
+        order: 'published_at DESC',
+        filter: `status:'published'+tag:${issue.slug}+tag:-hash-letter`
+    };
+    const TOC = plaintext.indexOf('[TableOfContents]') > -1 && (await getAllPosts(TOCparams));
 
     const postParams = {
         order: `published_at`,
@@ -83,15 +89,16 @@ export async function getStaticProps({ ...ctx }) {
         ...postParams
     });
 
-    // TODO: TOS generation?
+    const props = {
+        settings,
+        post,
+        next: next || null,
+        prev: prev || null,
+        TOC: TOC || null
+    };
 
     return {
-        props: {
-            settings,
-            post,
-            next: next || null,
-            prev: prev || null
-        }
+        props
     };
 }
 

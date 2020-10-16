@@ -1,4 +1,5 @@
-export const SidebarLayout = ({ featured, content, sidebar }) => (
+import { Pagination } from '@components/common/structure';
+export const SidebarLayout = ({ featured, content, sidebar, pageContext }) => (
     <main id="content" className="content" role="main">
         <div className="container container-masonry">
             <div className="inner">
@@ -9,12 +10,11 @@ export const SidebarLayout = ({ featured, content, sidebar }) => (
                             {content}
                         </div>
                         {/* TODO: Fix Pagination component */}
-                        {/* <div className="row">
-                        <Pagination
-                            pageContext={pageContext}
-                            className="col-sm-12"
-                        />
-                    </div> */}
+                        {pageContext && (
+                            <div className="row">
+                                <Pagination className="col-sm-12" {...pageContext} />
+                            </div>
+                        )}
                     </div>
                     <div className="col-sm-3">{sidebar}</div>
                 </div>

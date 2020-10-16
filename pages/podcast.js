@@ -12,6 +12,7 @@ import { MetaData } from '@components/common/meta';
 import { getSiteSettings } from '@lib/contentapi';
 import { getFeedAsJson } from '@lib/feed';
 import { Converter } from 'showdown';
+import config from '@config';
 
 const stripHeaders = {
     type: 'lang',
@@ -36,7 +37,7 @@ var noMorePsExt = {
  */
 const Podcast = ({ settings, info, items }) => {
     const { title, description, link, image } = info;
-    const location = new URL(settings.url + `podcast`);
+    const location = new URL(`${config.url}/podcast`);
     // TODO: Finish Featured for podcast
     const FeaturedHeading = () => (
         <div className="thumb featured">

@@ -1,7 +1,6 @@
 export Featured from './Featured.js';
 export FeedTemplate from './FeedTemplate.js';
 export Layout from './Layout.js';
-export Pagination from './Pagination.js';
 export SlickSlider from './SlickSlider.js';
 export SocialLink from './SocialLink.js';
 export WidgetWrapper from './WidgetWrapper.js';

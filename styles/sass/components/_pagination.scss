@@ -7,4 +7,9 @@
 }
 .pagination {
     margin: 1em;
+    &-location {
+        &-num {
+            margin: 0 .5em;
+        }
+    }
 }

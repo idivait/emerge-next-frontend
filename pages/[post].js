@@ -6,6 +6,7 @@ import { MetaData } from '@components/common/meta';
 import { PostTemplate } from '@components/common/articles';
 import { getAllPosts, getPostBySlug } from '@lib/adminapi';
 import { getSiteSettings } from '@lib/contentapi';
+import config from '@config';
 
 /**
  * Single post view (/:slug)
@@ -15,7 +16,7 @@ import { getSiteSettings } from '@lib/contentapi';
  */
 const Post = ({ settings, ...postProps }) => {
     const { post } = postProps;
-    const location = new URL(settings.url + post.slug);
+    const location = new URL(`${config.url}/${post.slug}`);
     return (
         <>
             <MetaData data={post} settings={settings} location={location} type="article" />

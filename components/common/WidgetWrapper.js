@@ -78,19 +78,7 @@ const WidgetWrapper = ({ site, tags }) => {
 
 WidgetWrapper.propTypes = {
     site: PropTypes.object.isRequired,
-    tags: PropTypes.array.isRequired
+    tags: PropTypes.array
 };
-
-const WidgetWrapperSettingsQuery = `
-            query WidgetGhostSettings {
-                allGhostSettings {
-                    edges {
-                        node {
-                            description
-                        }
-                    }
-                }
-            }
-        `;
 
 export default WidgetWrapper;

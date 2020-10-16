@@ -2,7 +2,7 @@ import { times } from 'lodash';
 import PropTypes from 'prop-types';
 
 // eslint-disable-next-line no-unused-vars
-import { Layout, Pagination, WidgetWrapper, Featured, SlickSlider } from '@components/common';
+import { Layout, WidgetWrapper, Featured, SlickSlider } from '@components/common';
 import { SidebarLayout } from '@components/common/structure';
 import { PostCard } from '@components/common/cards';
 import { MetaData } from '@components/common/meta';
@@ -10,6 +10,8 @@ import { getAllTags, getPostsByTag, getTag } from '@lib/adminapi';
 import { getSiteSettings } from '@lib/contentapi';
 
 import config from '@config';
+
+const tagPageSlug = (tag, page) => `/tag/${tag}/${page}`;
 
 /**
  * Main Sidebar page (home page)
@@ -19,7 +21,7 @@ import config from '@config';
  * in /utils/siteConfig.js under `postsPerPage`.
  *
  */
-const Sidebar = ({ posts, tags, letter, featured, tag, slug, settings }) => {
+const Sidebar = ({ posts, tags, letter, featured, tag, slug, settings, pageContext }) => {
     const FeaturedPosts = () => (
         <SlickSlider>
             {!letter && <Featured key={tag.id} tag={tag} />}
@@ -52,6 +54,7 @@ const Sidebar = ({ posts, tags, letter, featured, tag, slug, settings }) => {
                     featured={<FeaturedPosts />}
                     content={<Content />}
                     sidebar={<Widgets />}
+                    pageContext={pageContext}
                 />
                 {/* <main id="content" className="content" role="main">
                     <div className="container container-masonry">
@@ -110,7 +113,8 @@ Sidebar.propTypes = {
     tag: PropTypes.object,
     url: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
-    settings: PropTypes.object.isRequired
+    settings: PropTypes.object.isRequired,
+    page: PropTypes.string
 };
 
 export default Sidebar;
@@ -125,8 +129,9 @@ export default Sidebar;
 // TODO: Limit pages by config setting
 export async function getStaticProps({ ...ctx }) {
     const { slug: tagSlug, page } = ctx.params;
+    const totalPages = 7;
     const tag = await getTag(tagSlug, { include: 'count.posts' });
-    const posts = await getPostsByTag(tagSlug, { limit: 7, page });
+    const posts = await getPostsByTag(tagSlug, { limit: totalPages, page });
     const letter = await getPostsByTag(tagSlug, {
         filter: `status:'published'+tag:'hash-letter'+tag:'${tagSlug}'`,
         limit: 1
@@ -149,12 +154,21 @@ export async function getStaticProps({ ...ctx }) {
     // { order: DESC, fields: [published_at] }
     const featured = await getPostsByTag(tagSlug, {
         filter: `status:'published'+tag:${tagSlug}+featured:true`,
-        limit: 5
+        limit: 5,
+        order: 'DESC published_at'
     });
+
+    // const { previousPagePath, nextPagePath, humanPageNumber, numberOfPages } = pageContext
+    const fullPath = `${config.url}${tagPageSlug(tagSlug, page)}`;
+    const pageContext = {
+        fullPath,
+        ...posts.meta.pagination
+    };
 
     const props = {
         url: config.url,
         slug: tagSlug,
+        pageContext: pageContext || null,
         siteTitle: config.title,
         tag: tag || null,
         letter: letter.length > 0 ? letter[0] : null,
@@ -172,7 +186,6 @@ export async function getStaticProps({ ...ctx }) {
 // Make a static page for each tag and each page for the tag
 export async function getStaticPaths() {
     const tagSlugs = await getAllTags({ limit: 'all', fields: 'slug' });
-    const tagPageSlug = (tag, page) => `/tag/${tag}/${page}`;
 
     // Loop through tags and gets post meta base on limit.
     // For each page in the pagination, generate a path then push it onto the array.

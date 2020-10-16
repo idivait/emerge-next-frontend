@@ -1,0 +1,16 @@
+#pagination {
+  text-align: center;
+  margin: 1em;
+}
+
+#pagination .page_id {
+  margin: 0 0.3em;
+}
+
+.pagination {
+  margin: 1em;
+}
+
+.pagination-location-num {
+  margin: 0 .5em;
+}

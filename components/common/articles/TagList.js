@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 
 const TagLink = ({ visibility, id, slug, name }) => {
-    console.log(visibility);
     if (visibility !== `public`) {
         return <></>;
     }
@@ -26,7 +25,7 @@ export const TagList = ({ tags, title }) => {
         <p className="tags">
             <strong className="padding-bottom">{title}</strong>
             {tags.map((tag) => (
-                <TagLink key={tag.id} tag={tag} />
+                <TagLink key={tag.id} {...tag} />
             ))}
         </p>
     );

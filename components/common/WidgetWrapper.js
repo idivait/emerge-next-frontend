@@ -31,7 +31,7 @@ const WidgetWrapper = ({ site, tags }) => {
             {tags && (
                 <>
                     <TagWidget regex="category-.*" title="Categories" tags={tags} />
-                    <TagWidget regex="issue-.*" title="Issues" tags={tags} />
+                    <TagWidget regex="issue-.*" title="Issues" tags={tags.reverse()} />
                 </>
             )}
             <Widget className="widget_newsletter no-bottom">

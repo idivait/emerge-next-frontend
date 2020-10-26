@@ -3,8 +3,14 @@ import { DateTime } from 'luxon';
 import Link from 'next/link';
 
 // import { SocialLink } from '@components/common';
-import { BGImage, Image, defaultImageSrc } from '@components/common/images';
-import { ArticleContent, SocialShare, TagList } from '@components/common/articles';
+import { CoverImage, ProfileImage } from '@components/common/images';
+import {
+    ArticleContent,
+    SocialShare,
+    TagList,
+    OtherPost,
+    AuthorData
+} from '@components/common/articles';
 // import WebsiteList from '@components/common/authors/WebsiteList';
 import ByAuthors from '@components/common/authors/ByAuthors';
 
@@ -13,7 +19,7 @@ import ByAuthors from '@components/common/authors/ByAuthors';
 // TODO: set props
 // TODO: Set proptypes
 
-const PostTemplate = ({ post, location, next, prev, TOC }) => {
+const PostTemplate = ({ post, location, next, prev, TOC, authorPosts }) => {
     const { primary_author: author, tags: alltags } = post;
     const published_at = DateTime.fromISO(post.published_at).toLocaleString(DateTime.DATETIME_MED);
     const tags = alltags.sort((a, b) =>
@@ -21,34 +27,35 @@ const PostTemplate = ({ post, location, next, prev, TOC }) => {
     );
     let imgOpt = { w: 1060, h: 640 };
     let imgOptSm = { w: 1060, h: 640, q: 1 };
+
+    const ColRow = ({ cols }) => {
+        const num = cols.length;
+        return (
+            <div className="row">
+                {cols.map(({ title, content }, i) => (
+                    <div key={i} className={`col-sm-${12 / num} ${title}`}>
+                        {content}
+                    </div>
+                ))}
+            </div>
+        );
+    };
+
+    const AuthorBio = ({ bio }) =>
+        bio && (
+            <>
+                <h5>About the Author</h5>
+                <ReactMarkdown source={bio} escapeHtml={false} />
+            </>
+        );
+
+    const AuthorPosts = ({ posts }) => {
+        return <></>;
+    };
     return (
         <main id="content" role="main" className="post-template">
             <div className="container">
-                <figure className="post-image">
-                    {tags.find((t) => t.slug === `hash-biography`) ? (
-                        <BGImage
-                            className="bg-image"
-                            source={author.cover_image || defaultImageSrc}
-                            large={imgOpt}
-                            small={imgOptSm}
-                        />
-                    ) : (
-                        <BGImage
-                            className="bg-image"
-                            source={post.feature_image || defaultImageSrc}
-                            large={imgOpt}
-                            small={imgOptSm}
-                        />
-                    )}
-                    <div className="image-info">
-                        <h1 className="single-title no-bottom">{post.title}</h1>
-                        <p className="post-meta">
-                            <span alt={published_at} title={published_at}>
-                                <ByAuthors authors={post.authors} />
-                            </span>
-                        </p>
-                    </div>
-                </figure>
+                <CoverImage small={imgOptSm} large={imgOpt} {...post} />
                 <div className="row">
                     <div className="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
                         <ArticleContent post={post} TOC={TOC} />
@@ -61,26 +68,34 @@ const PostTemplate = ({ post, location, next, prev, TOC }) => {
                                 <TagList tags={post.tags} title="Tagged:" />
                             </div>
                         </div>
-                        {/*//         <div className="clear"></div>
-                    //         <div className="sep margin-2"></div>
-                    //         <h5>Continue Reading</h5>
-                    //         <div className="owl-carousel owl-thumbs-2 continue-reading">
-                    //             <div className="row">
-                    //                 {prev && <OtherPost post={prev} type="prev" />}
-                    //                 {next && <OtherPost post={next} type="next" />}
-                    //             </div>
-                    //         </div>
-                    //         <div className="margin-5"></div>
-                    //         <div className="row">
-                    //             <div className="col-sm-6 bio">
-                    //                 <h5>About the Author</h5>
-                    //                 {author.bio && (
-                    //                     <p>
-                    //                         <ReactMarkdown source={author.bio} escapeHtml={false} />
-                    //                     </p>
-                    //                 )}
-                    //             </div>
-                    //             <div className="col-sm-6 author-info">
+                        <div className="clear"></div>
+                        <div className="sep margin-2"></div>
+                        <h5>Continue Reading</h5>
+                        <div className="owl-carousel owl-thumbs-2 continue-reading">
+                            <div className="row">
+                                {prev && <OtherPost type="prev" {...prev} />}
+                                {next && <OtherPost type="next" {...next} />}
+                            </div>
+                        </div>
+                        <div className="margin-5"></div>
+                        <ColRow
+                            cols={[
+                                { title: 'bio', content: <AuthorBio bio={author.bio} /> },
+                                {
+                                    title: 'author-info',
+                                    content: <AuthorData posts={authorPosts} {...author} />
+                                }
+                            ]}
+                        />
+                        {/* <div className="row">
+                            <AuthorRow></AuthorRow> */}
+                        {/*<div className="col-sm-6 bio">
+                                
+                                {author.bio && (
+                                    <ReactMarkdown source={author.bio} escapeHtml={false} />
+                                )}
+                            </div>
+                            //             <div className="col-sm-6 author-info">
                     //                 <header>
                     //                     {author.profile_image && (
                     //                         <p>
@@ -167,10 +182,10 @@ const PostTemplate = ({ post, location, next, prev, TOC }) => {
                     //                         </div>
                     //                     </>
                     //                 )}
-                    //             </div>
-                    //         </div>
-                    //         <div className="clear"></div>
-                    //         <div className="margin-4"></div>*/}
+                    //             </div>*/}
+                        {/* </div> */}
+                        <div className="clear"></div>
+                        <div className="margin-4"></div>
                     </div>
                 </div>
             </div>

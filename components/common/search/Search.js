@@ -1,6 +1,6 @@
 import algoliasearch from 'algoliasearch/lite';
 import { createRef, default as React, useState } from 'react';
-import { InstantSearch } from 'react-instantsearch-dom';
+import { InstantSearch, Configure } from 'react-instantsearch-dom';
 import SearchBox from './SearchBox';
 import SearchResult from './SearchResult';
 import useClickOutside from './useClickOutside';
@@ -26,6 +26,7 @@ export default function Search({ indices }) {
                 searchClient={searchClient}
                 indexName={indices[0].name}
                 onSearchStateChange={({ query }) => setQuery(query)}>
+                <Configure hitsPerPage={5} />
                 <SearchBox
                     className={`SearchForm`}
                     onFocus={() => setFocus(true)}

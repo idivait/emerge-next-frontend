@@ -7,22 +7,17 @@ const Card = ({ url, image, overlay, children, className, imgOpt, imgOptSm, exte
     imgOptSm = imgOptSm || { w: 40, h: 40 };
 
     const WrapperURL = ({ children: wkids }) => {
-        const GradientLink = ({ url, children: lkids }) => (
-            <a
-                className={
-                    `image-link ${!overlay && 'arrow-icon'} dark-overlay ` + (!image && `gradient`)
-                }
-                href={url ? url : ''}>
-                {lkids}
-            </a>
-        );
+        const wclasses =
+            `image-link ${!overlay && 'arrow-icon'} dark-overlay ` + (!image && `gradient`);
 
         return !external ? (
             <Link href={url}>
-                <GradientLink>{wkids}</GradientLink>
+                <a className={wclasses}>{wkids}</a>
             </Link>
         ) : (
-            <GradientLink url={url}>{wkids}</GradientLink>
+            <a href={url} className={wclasses}>
+                {wkids}
+            </a>
         );
     };
 

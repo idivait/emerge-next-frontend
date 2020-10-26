@@ -64,12 +64,19 @@ export async function getStaticProps({ ...ctx }) {
     const { post: slug } = ctx.params;
     const settings = await getSiteSettings();
     const post = await getPostBySlug(slug);
+    const authorPosts = await getAllPosts({
+        filter: `author:'${post.primary_author.slug}'`,
+        limit: 9,
+        fields: `id, slug, title, feature_image`
+    });
     const { tags, plaintext, published_at } = post;
     const issue = tags.find((tag) => tag.slug.startsWith('issue'));
     // sort: { order: DESC, fields: [published_at] }
     // filter: {
     //     tags: { elemMatch: { name: { eq: $issue, nin: "#letter" } } }
     // }
+    // TODO: Get author posts
+    // post fields: id, slug, title, feature_image
     const TOCparams = {
         order: 'published_at DESC',
         filter: `status:'published'+tag:${issue.slug}+tag:-hash-letter`
@@ -95,7 +102,8 @@ export async function getStaticProps({ ...ctx }) {
         post,
         next: next || null,
         prev: prev || null,
-        TOC: TOC || null
+        TOC: TOC || null,
+        authorPosts: authorPosts.length > 0 ? authorPosts : null
     };
 
     return {

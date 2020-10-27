@@ -13,7 +13,7 @@ const PageLinks = ({ total, page, location }) => {
             return;
         }
         pages.push(
-            <Link href={path}>
+            <Link href={path} key={p}>
                 <a>
                     <span className="pagination-location-num">{p}</span>
                 </a>
@@ -60,7 +60,7 @@ const Pagination = ({ fullPath, className, page, pages: totalPages, next, prev }
 };
 
 Pagination.propTypes = {
-    page: PropTypes.string,
+    page: PropTypes.number,
     totalPages: PropTypes.string,
     fullPath: PropTypes.string
 };

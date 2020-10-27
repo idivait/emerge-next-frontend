@@ -21,7 +21,7 @@ const tagPageSlug = (tag, page) => `/tag/${tag}/${page}`;
  * in /utils/siteConfig.js under `postsPerPage`.
  *
  */
-const Sidebar = ({ posts, tags, letter, featured, tag, slug, settings, pageContext }) => {
+const Sidebar = ({ posts, tags, letter, featured, tag, slug, settings, pageContext, preview }) => {
     const FeaturedPosts = () => (
         <SlickSlider>
             {!letter && <Featured key={tag.id} tag={tag} />}
@@ -49,7 +49,7 @@ const Sidebar = ({ posts, tags, letter, featured, tag, slug, settings, pageConte
     return (
         <>
             <MetaData type="tag" location={{ pathname: slug }} settings={settings} />
-            <Layout isHome={true} site={settings}>
+            <Layout isHome={true} site={settings} preview={preview} >
                 <SidebarLayout
                     featured={<FeaturedPosts />}
                     content={<Content />}
@@ -127,7 +127,7 @@ export default Sidebar;
 //  - Tag metadata
 
 // TODO: Limit pages by config setting
-export async function getStaticProps({ ...ctx }) {
+export async function getStaticProps({ preview, ...ctx }) {
     const { slug: tagSlug, page } = ctx.params;
     const totalPages = 7;
     const tag = await getTag(tagSlug, { include: 'count.posts' });
@@ -175,7 +175,8 @@ export async function getStaticProps({ ...ctx }) {
         featured: featured || null,
         posts: posts || null,
         tags: tags || null,
-        settings: settings || null
+        settings: settings || null,
+        preview: preview || null
     };
 
     return {

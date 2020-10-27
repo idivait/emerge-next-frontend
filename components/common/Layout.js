@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 
-import { Header, Footer } from './structure';
+import { Header, Footer, PreviewBar } from './structure';
 import { Component } from 'react';
 
 /**
@@ -14,7 +14,7 @@ import { Component } from 'react';
  */
 class DefaultLayout extends Component {
     render() {
-        const { site, children, bodyClass } = this.props;
+        const { site, children, bodyClass, preview } = this.props;
         // const twitterUrl = site.twitter
         //     ? `https://twitter.com/${site.twitter.replace(/^@/, ``)}`
         //     : null;
@@ -46,6 +46,7 @@ class DefaultLayout extends Component {
                         src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
                     {site.codeinjection_head}
                 </Head>
+                {preview && <PreviewBar {...preview} />}
                 <Header site={site} />
                 <div className="site-wrapper">
                     {children}

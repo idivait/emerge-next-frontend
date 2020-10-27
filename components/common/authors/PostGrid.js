@@ -1,15 +1,18 @@
-export const PostList = ({ posts, ...author }) => {
-    // post fields: id, slug, title, feature_image
-    return <></>;
-    {
-        authorPosts.length > 0 && (
+import Link from "next/link"
+import { Image } from "@components/common/images"
+
+export const PostList = ({ posts }) => {
+    return (
+        (
+        posts.length > 0 && (
             <>
                 <h6>More Posts by this author&hellip;</h6>
                 <div className="authorPosts">
-                    {authorPosts.map(({ id, slug, title, feature_image }) => (
+                    {posts.map(({ id, slug, title, feature_image }) => (
                         <div key={id} className="thumb">
                             <div className="photo">
-                                <Link to={`/${slug}/`} title={title}>
+                                <Link href={`/${slug}/`} >
+                                    <a title={title}>
                                     <Image
                                         source={feature_image}
                                         large={{
@@ -25,14 +28,16 @@ export const PostList = ({ posts, ...author }) => {
                                     <span className="info">
                                         <em className="arrow-right centered"></em>
                                     </span>
+                                    </a>
                                 </Link>
                             </div>
                         </div>
                     ))}
                 </div>
             </>
-        );
-    }
+        )
+    )
+    );
 };
 
 export default PostList;

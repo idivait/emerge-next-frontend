@@ -70,13 +70,15 @@ const editImage = (image, options) => {
         );
         return parseCloudinary(localToCloud, options);
     }
-    if (image.indexOf(`unsplash`) < 0 && image.indexOf(`cloudinary`) < 0) {
+    if (image.indexOf(`unsplash.com`) < 0 && image.indexOf(`cloudinary.com`) < 0) {
+        console.log(`unsplash procs: ${image}`);
         return image;
     }
-    if (image.indexOf(`unsplash`) >= 0) {
+    if (image.indexOf(`unsplash.com`) >= 0) {
         return parseUnsplash(image, options);
     }
-    if (image.indexOf(`cloudinary`) >= 0) {
+    if (image.indexOf(`cloudinary.com`) >= 0) {
+        console.log(`cloudinary procs: ${image}`);
         return parseCloudinary(image, options);
     }
 };

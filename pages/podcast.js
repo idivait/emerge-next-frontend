@@ -94,7 +94,7 @@ const Podcast = ({ settings, info, items }) => {
             {/* <Head>
                 <style type="text/css">{`${post.codeinjection_styles}`}</style>
             </Head> */}
-            <Layout site={settings}>
+            <Layout site={settings} preview={preview}>
                 <SidebarLayout
                     featured={<FeaturedHeading />}
                     content={<Content />}
@@ -113,14 +113,15 @@ Podcast.propTypes = {
 
 export default Podcast;
 
-export async function getStaticProps({ ...ctx }) {
+export async function getStaticProps({ preview, ...ctx }) {
     const settings = await getSiteSettings();
     const { items, ...info } = await getFeedAsJson(`https://anchor.fm/s/10b39e34/podcast/rss`);
 
     const props = {
         settings,
         items,
-        info
+        info,
+        preview
     };
 
     return {

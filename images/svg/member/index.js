@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import CLMP from "./clmp.inline.svg";
+import CLMP from './clmp.inline.svg';
 
 const MemberImages = () => (
     <React.Fragment>

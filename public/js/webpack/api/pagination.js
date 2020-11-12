@@ -1,5 +1,5 @@
 function showPagination(pagination) {
-    let pagination_el = jQuery("#pagination");
+    let pagination_el = jQuery('#pagination');
     // Play around with template literals.
     if (pagination_el) {
         let pagination_content = `<nav>`;
@@ -40,9 +40,9 @@ function showPagination(pagination) {
 module.exports = (blogInfo) => {
     if (blogInfo) {
         fetch(
-            ghost.url.api("posts", {
+            ghost.url.api('posts', {
                 page: blogInfo.page,
-                limit: blogInfo.posts_per_page,
+                limit: blogInfo.posts_per_page
             })
         )
             .then((body) => {

@@ -1,7 +1,7 @@
-@import "authors";
-@import "author";
-@import "post";
-@import "search";
+@import 'authors';
+@import 'author';
+@import 'post';
+@import 'search';
 //@media screen and (min-width: 768px) {
 nav.pagination {
     width: 100%;
@@ -35,7 +35,7 @@ nav.pagination {
 }
 .carousel-wrapper {
     grid-column: 1/3;
-    grid-row: 1/3;
+    grid-row: 1/2;
     position: relative;
     > .container.fill-parent {
         border-right: 0px;
@@ -115,6 +115,17 @@ nav.pagination {
             flex-grow: 1;
             background-position: bottom center;
         }
+        &.static {
+            //primarily for custom featured box overrides
+            padding: 2em;
+            //background: $accent-main;
+            h2 {
+                font-size: 3em;
+            }
+            p {
+                font-size: 1em;
+            }
+        }
     }
     .post-box {
         background-color: transparent;
@@ -131,7 +142,7 @@ nav.pagination {
             }
             &.arrow-icon:after,
             &.dark-overlay:before {
-                content: "";
+                content: '';
                 display: block;
                 z-index: 1000;
                 opacity: 1;
@@ -159,12 +170,19 @@ nav.pagination {
             audio {
                 margin-bottom: 1em;
             }
-            p.meta, div.meta, .meta {
+            p.meta,
+            div.meta,
+            .meta {
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
                 margin-top: 1em;
-                h1, h2, h3, h4, h5, h6 {
+                h1,
+                h2,
+                h3,
+                h4,
+                h5,
+                h6 {
                     font-size: 1em;
                     margin: 0;
                     all: unset;
@@ -172,6 +190,12 @@ nav.pagination {
                 i {
                     margin-right: 0.2em;
                 }
+            }
+            content {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 100%;
             }
             @media screen and (max-width: 768px) {
                 .meta.small {
@@ -217,11 +241,7 @@ nav.pagination {
                 rgba(255, 255, 255, 0.15) 0%,
                 rgba(0, 0, 0, 0.15) 100%
             ),
-            radial-gradient(
-                    at top center,
-                    rgba(255, 255, 255, 0.4) 0%,
-                    rgba(0, 0, 0, 0.4) 120%
-                )
+            radial-gradient(at top center, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 120%)
                 #989898;
         background-blend-mode: multiply, multiply;
     }

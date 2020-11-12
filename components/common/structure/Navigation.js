@@ -1,6 +1,5 @@
-
-import PropTypes from "prop-types";
-import Link from "next/link";
+import PropTypes from 'prop-types';
+import Link from 'next/link';
 
 /**
  * Navigation component
@@ -14,7 +13,7 @@ import Link from "next/link";
  */
 const Navigation = ({ data, navClass }) => (
     <>
-        {data.map(({url, label}, i) => {
+        {data.map(({ url, label }, i) => {
             if (url.match(/^\s?http(s?)/gi)) {
                 return (
                     <li key={i}>
@@ -23,8 +22,7 @@ const Navigation = ({ data, navClass }) => (
                             href={url}
                             key={i}
                             target="_blank"
-                            rel="noopener noreferrer"
-                        >
+                            rel="noopener noreferrer">
                             {label}
                         </a>
                     </li>
@@ -43,17 +41,17 @@ const Navigation = ({ data, navClass }) => (
 );
 
 Navigation.defaultProps = {
-    navClass: `site-nav-item`,
+    navClass: `site-nav-item`
 };
 
 Navigation.propTypes = {
     data: PropTypes.arrayOf(
         PropTypes.shape({
             label: PropTypes.string.isRequired,
-            url: PropTypes.string.isRequired,
+            url: PropTypes.string.isRequired
         }).isRequired
     ).isRequired,
-    navClass: PropTypes.string,
+    navClass: PropTypes.string
 };
 
 export default Navigation;

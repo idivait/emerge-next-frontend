@@ -1,5 +1,3 @@
-
-
 const SocialLink = ({ url, className, icon }) => {
     if (!url) {
         return ``;

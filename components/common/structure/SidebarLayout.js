@@ -5,9 +5,11 @@ export const SidebarLayout = ({ featured, content, sidebar, pageContext }) => (
             <div className="inner">
                 <div className="row">
                     <div className="col-sm-9">
-                        <div className="row posts-grid">
+                        <div className="row">
+                            <div className="posts-grid">
                             <div className="box carousel-wrapper">{featured}</div>
                             {content}
+                            </div>
                         </div>
                         {/* TODO: Fix Pagination component */}
                         {pageContext && (

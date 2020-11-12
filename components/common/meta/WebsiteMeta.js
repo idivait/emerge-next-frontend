@@ -1,47 +1,52 @@
-import Head from "next/head"
-import PropTypes from 'prop-types'
-import _ from 'lodash'
-import url from 'url'
+import Head from 'next/head';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+import url from 'url';
 
-import ImageMeta from './ImageMeta'
-import config from '@config'
+import ImageMeta from './ImageMeta';
+import config from '@config';
 
 const WebsiteMeta = ({ data, settings, canonical, title, description, image, type }) => {
+    const publisherLogo = url.resolve(config.url, settings.logo);
+    let shareImage = image || data.feature_image || _.get(settings, `cover_image`, null);
+    shareImage = shareImage ? url.resolve(config.url, shareImage) : null;
 
-    const publisherLogo = url.resolve(config.url, (settings.logo))
-    let shareImage = image || data.feature_image || _.get(settings, `cover_image`, null)
-    shareImage = shareImage ? url.resolve(config.url, shareImage) : null
-    
-    description = description || data.meta_description || data.description || config.description || settings.description
-    title = `${title || data.meta_title || data.name || data.title} - ${settings.title}`
+    description =
+        description ||
+        data.meta_description ||
+        data.description ||
+        config.description ||
+        settings.description;
+    title = `${title || data.meta_title || data.name || data.title} - ${settings.title}`;
 
     const jsonLd = {
-        "@context": `https://schema.org/`,
-        "@type": type,
+        '@context': `https://schema.org/`,
+        '@type': type,
         url: canonical,
-        image: shareImage ?
-            {
-                "@type": `ImageObject`,
-                url: shareImage,
-                width: config.shareImageWidth,
-                height: config.shareImageHeight,
-            } : undefined,
+        image: shareImage
+            ? {
+                  '@type': `ImageObject`,
+                  url: shareImage,
+                  width: config.shareImageWidth,
+                  height: config.shareImageHeight
+              }
+            : undefined,
         publisher: {
-            "@type": `Organization`,
+            '@type': `Organization`,
             name: settings.title,
             logo: {
-                "@type": `ImageObject`,
+                '@type': `ImageObject`,
                 url: publisherLogo,
                 width: 60,
-                height: 60,
-            },
+                height: 60
+            }
         },
         mainEntityOfPage: {
-            "@type": `WebPage`,
-            "@id": config.url,
+            '@type': `WebPage`,
+            '@id': config.url
         },
-        description,
-    }
+        description
+    };
 
     return (
         <>
@@ -57,14 +62,19 @@ const WebsiteMeta = ({ data, settings, canonical, title, description, image, typ
                 <meta name="twitter:title" content={title} />
                 <meta name="twitter:description" content={description} />
                 <meta name="twitter:url" content={canonical} />
-                {settings.twitter && <meta name="twitter:site" content={`https://twitter.com/${settings.twitter.replace(/^@/, ``)}/`} />}
+                {settings.twitter && (
+                    <meta
+                        name="twitter:site"
+                        content={`https://twitter.com/${settings.twitter.replace(/^@/, ``)}/`}
+                    />
+                )}
                 {settings.twitter && <meta name="twitter:creator" content={settings.twitter} />}
                 <script type="application/ld+json">{JSON.stringify(jsonLd, undefined, 4)}</script>
             </Head>
             <ImageMeta image={shareImage} />
         </>
-    )
-}
+    );
+};
 
 WebsiteMeta.propTypes = {
     data: PropTypes.shape({
@@ -75,14 +85,14 @@ WebsiteMeta.propTypes = {
         feature_image: PropTypes.string,
         description: PropTypes.string,
         bio: PropTypes.string,
-        profile_image: PropTypes.string,
+        profile_image: PropTypes.string
     }).isRequired,
     settings: PropTypes.object,
     canonical: PropTypes.string.isRequired,
     title: PropTypes.string,
     description: PropTypes.string,
     image: PropTypes.string,
-    type: PropTypes.oneOf([`WebSite`, `Series`]).isRequired,
-}
+    type: PropTypes.oneOf([`WebSite`, `Series`]).isRequired
+};
 
-export default WebsiteMeta
+export default WebsiteMeta;

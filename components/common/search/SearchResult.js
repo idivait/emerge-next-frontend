@@ -1,5 +1,5 @@
-import Link from "next/link"
-import { default as React } from "react"
+import Link from 'next/link';
+import { default as React } from 'react';
 import {
     connectStateResults,
     Highlight,
@@ -7,8 +7,8 @@ import {
     connectInfiniteHits,
     Index,
     Snippet,
-    PoweredBy,
-} from "react-instantsearch-dom"
+    PoweredBy
+} from 'react-instantsearch-dom';
 
 const InfiniteHits = ({
     hits,
@@ -17,58 +17,57 @@ const InfiniteHits = ({
     hasMore,
     refineNext,
     className,
-    indexName,
+    indexName
 }) => (
     <div className={`ais-InfiniteHits ${className}`}>
         <button
             className="ais-InfiniteHits-loadPrevious"
             disabled={!hasPrevious}
-            onClick={refinePrevious}
-        >
+            onClick={refinePrevious}>
             Show previous
         </button>
         <ol className="ais-InfiniteHits-list">
-            {hits.map(hit => (
+            {hits.map((hit) => (
                 <li className="ais-InfiniteHits-item" key={hit.objectID}>
                     <PageHit hit={hit} indexName={indexName} />
                 </li>
             ))}
         </ol>
-        <button
-            className="ais-InfiniteHits-loadMore"
-            disabled={!hasMore}
-            onClick={refineNext}
-        >
+        <button className="ais-InfiniteHits-loadMore" disabled={!hasMore} onClick={refineNext}>
             Show more
         </button>
     </div>
-)
+);
 
-const CustomInfiniteHits = connectInfiniteHits(InfiniteHits)
+const CustomInfiniteHits = connectInfiniteHits(InfiniteHits);
 
 const HitCount = connectStateResults(({ searchResults }) => {
-    const hitCount = searchResults && searchResults.nbHits
+    const hitCount = searchResults && searchResults.nbHits;
 
     return hitCount > 0 ? (
         <div className="HitCount">
             {hitCount} result{hitCount !== 1 ? `s` : ``}
         </div>
-    ) : null
-})
+    ) : null;
+});
 
 const PageHit = ({ hit, indexName }) => {
-    const isAuthor = indexName === `ghost_authors`
+    const isAuthor = indexName === `ghost_authors`;
     return (
         <Link href={`${isAuthor ? `/author` : ``}/${hit.slug}/`}>
             <a>
                 <div>
                     <span>
-                        <Highlight attribute={isAuthor ? `name` : `title`} hit={hit} tagName="mark" />
+                        <Highlight
+                            attribute={isAuthor ? `name` : `title`}
+                            hit={hit}
+                            tagName="mark"
+                        />
                         {!isAuthor && (
                             <>
                                 <br />
                                 <span className="author">
-                                by{` `}
+                                    by{` `}
                                     <Highlight
                                         attribute="primary_author.name"
                                         hit={hit}
@@ -77,15 +76,14 @@ const PageHit = ({ hit, indexName }) => {
                                 </span>
                             </>
                         )}
-    
                     </span>
-    
+
                     <Snippet attribute={isAuthor ? `bio` : `excerpt`} hit={hit} tagName="mark" />
                 </div>
             </a>
         </Link>
-    )
-}
+    );
+};
 
 const HitsInIndex = ({ index }) => (
     <Index indexName={index.name}>
@@ -95,15 +93,15 @@ const HitsInIndex = ({ index }) => (
         </header>
         <CustomInfiniteHits className="Hits" indexName={index.name} />
     </Index>
-)
+);
 
 const SearchResult = ({ indices, className, show }) => (
     <div className={className} style={{ display: show ? `block` : `none` }}>
-        {indices.map(index => (
+        {indices.map((index) => (
             <HitsInIndex index={index} key={index.name} />
         ))}
         <PoweredBy />
     </div>
-)
+);
 
-export default SearchResult
+export default SearchResult;

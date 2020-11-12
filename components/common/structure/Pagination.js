@@ -9,7 +9,7 @@ const PageLinks = ({ total, page, location }) => {
         const path = generatePathName(location.pathname, p);
         if (!path) return;
         if (p === page) {
-            pages.push(<span className="pagination-location-num">{p}</span>);
+            pages.push(<span className="pagination-location-num" key={p}>{p}</span>);
             return;
         }
         pages.push(

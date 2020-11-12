@@ -1,9 +1,8 @@
+import Link from 'next/link';
 
-import Link from "next/link";
-
-import config from "@config";
-import Logo from "@images/svg/logo.inline.svg";
-import MemberImages from "@images/svg/member";
+import config from '@config';
+import Logo from '@images/svg/logo.inline.svg';
+import MemberImages from '@images/svg/member';
 
 const Footer = ({ site }) => {
     const now = new Date();
@@ -14,22 +13,16 @@ const Footer = ({ site }) => {
                 <p>
                     <Link href="/">
                         <a className="mini-logo">
-                        {site.logo ? (
-                            <img
-                                src={site.logo}
-                                width="90"
-                                height="33"
-                                alt={site.title}
-                            />
-                        ) : (
-                            <Logo />
-                        )}
+                            {site.logo ? (
+                                <img src={site.logo} width="90" height="33" alt={site.title} />
+                            ) : (
+                                <Logo />
+                            )}
                         </a>
                     </Link>
                 </p>
                 <p>
-                    &copy; <a href={site.url}>{site.title}</a>{" "}
-                    {now.getFullYear()}
+                    &copy; <a href={site.url}>{site.title}</a> {now.getFullYear()}
                 </p>
                 <p>
                     Website design by <a href="//idiva.it">iDiva.IT</a>

@@ -11,7 +11,6 @@ import { Card } from '@components/common/cards';
 import { MetaData } from '@components/common/meta';
 import { getSiteSettings } from '@lib/contentapi';
 import { getFeedAsJson } from '@lib/feed';
-import { Converter } from 'showdown';
 import config from '@config';
 
 const stripHeaders = {
@@ -35,12 +34,12 @@ var noMorePsExt = {
  * This file renders a single post and loads all the content.
  *
  */
-const Podcast = ({ settings, info, items }) => {
+const Podcast = ({ settings, info, items, preview }) => {
     const { title, description, link, image } = info;
     const location = new URL(`${config.url}/podcast`);
     // TODO: Finish Featured for podcast
     const FeaturedHeading = () => (
-        <div className="thumb featured">
+        <div className="thumb featured static podcast" style={{ backgroundColor: '#230015' }}>
             <h2>{title}</h2>
             <p>{description}</p>
             <a href={link}>More info</a>
@@ -72,10 +71,12 @@ const Podcast = ({ settings, info, items }) => {
                 <a href={url}>
                     <h5>{title}</h5>
                 </a>
-                <div className="meta small" style={styles}>
-                    <div dangerouslySetInnerHTML={{ __html: itunes_summary }}></div>
-                </div>
-                <ReactAudioPlayer src={audioFile} style={embedStyles} controls />
+                <content>
+                    <div className="meta small" style={styles}>
+                        <div dangerouslySetInnerHTML={{ __html: itunes_summary }}></div>
+                    </div>
+                    <ReactAudioPlayer src={audioFile} style={embedStyles} controls />
+                </content>
             </Card>
         );
     };
@@ -118,10 +119,10 @@ export async function getStaticProps({ preview, ...ctx }) {
     const { items, ...info } = await getFeedAsJson(`https://anchor.fm/s/10b39e34/podcast/rss`);
 
     const props = {
-        settings,
-        items,
-        info,
-        preview
+        settings: settings || null,
+        items: items || null,
+        info: info || null,
+        preview: preview || false
     };
 
     return {

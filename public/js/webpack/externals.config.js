@@ -1,4 +1,4 @@
 module.exports = {
-  path: "../externals",
-  filter: /\.js$/
-}
+    path: '../externals',
+    filter: /\.js$/
+};

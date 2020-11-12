@@ -5,7 +5,8 @@ var Blazy = require('blazy');
 var exa = require('dir!./exa.config.js');
 
 //jQuery modules
-jQuery(document).ready(function () { "use strict";
+jQuery(document).ready(function () {
+    'use strict';
     if (startCarousel) startCarousel();
     //require('./api/issue_list')();
     require('./api/pagination')(blogInfo);

@@ -1,8 +1,8 @@
 const footnoteExt = () => {
     return {
-        type: "lang",
+        type: 'lang',
         regex: /\^(\d)+\^/gm,
-        replace: `<sup>$1</sup>`,
+        replace: `<sup>$1</sup>`
     };
 };
 

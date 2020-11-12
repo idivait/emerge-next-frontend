@@ -1,10 +1,10 @@
-import Head from 'next/head'
-import PropTypes from 'prop-types'
-import config from '@config'
+import Head from 'next/head';
+import PropTypes from 'prop-types';
+import config from '@config';
 
 const ImageMeta = ({ image }) => {
     if (!image) {
-        return null
+        return null;
     }
 
     return (
@@ -15,11 +15,11 @@ const ImageMeta = ({ image }) => {
             <meta property="og:image:width" content={config.shareImageWidth} />
             <meta property="og:image:height" content={config.shareImageHeight} />
         </Head>
-    )
-}
+    );
+};
 
 ImageMeta.propTypes = {
-    image: PropTypes.string,
-}
+    image: PropTypes.string
+};
 
-export default ImageMeta
+export default ImageMeta;

@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 const imageProps = {
     children: PropTypes.node,
@@ -6,12 +6,12 @@ const imageProps = {
     className: PropTypes.string,
     small: PropTypes.shape({
         w: PropTypes.number,
-        h: PropTypes.number,
+        h: PropTypes.number
     }),
     large: PropTypes.shape({
         w: PropTypes.number,
-        h: PropTypes.number,
-    }),
+        h: PropTypes.number
+    })
 };
 
 export default imageProps;

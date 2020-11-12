@@ -66,19 +66,17 @@ const editImage = (image, options) => {
     if (isLocal) {
         const localToCloud = image.replace(
             localReg,
-            "https://res-1.cloudinary.com/emerge-magazine/image/upload/q_auto/v1/blog-images/$2"
+            'https://res-1.cloudinary.com/emerge-magazine/image/upload/q_auto/v1/blog-images/$2'
         );
         return parseCloudinary(localToCloud, options);
     }
     if (image.indexOf(`unsplash.com`) < 0 && image.indexOf(`cloudinary.com`) < 0) {
-        console.log(`unsplash procs: ${image}`);
         return image;
     }
     if (image.indexOf(`unsplash.com`) >= 0) {
         return parseUnsplash(image, options);
     }
     if (image.indexOf(`cloudinary.com`) >= 0) {
-        console.log(`cloudinary procs: ${image}`);
         return parseCloudinary(image, options);
     }
 };

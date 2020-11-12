@@ -49,7 +49,7 @@ const Sidebar = ({ posts, tags, letter, featured, tag, slug, settings, pageConte
     return (
         <>
             <MetaData type="tag" location={{ pathname: slug }} settings={settings} />
-            <Layout isHome={true} site={settings} preview={preview} >
+            <Layout isHome={true} site={settings} preview={preview}>
                 <SidebarLayout
                     featured={<FeaturedPosts />}
                     content={<Content />}

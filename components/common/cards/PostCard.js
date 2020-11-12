@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { readingTime as readingTimeHelper } from '@tryghost/helpers';
+import { readingTime as readingTimeHelper } from '@lib/helpers';
 
 import { Card } from '.';
 import ByAuthors from '../authors/ByAuthors';
@@ -9,7 +9,7 @@ const PostCard = ({ post }) => {
     const url = `/${post.slug}/`;
     const { authors } = post;
     const readingTime = readingTimeHelper(post, {
-        minute: `<1m`,
+        minute: `1m`,
         minutes: `%m`
     });
 
